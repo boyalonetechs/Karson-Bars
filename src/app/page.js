@@ -1,27 +1,12 @@
 "use client"
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { 
-  ShoppingCart, 
-  ArrowRight, 
-  ChevronLeft, 
-  ChevronRight, 
-  Menu, 
-  X, 
-  MessageCircle, 
-  Share2 
-} from 'lucide-react';
-
-const InstagramIcon = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-  </svg>
-);
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default function LandingPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
   // Hero Slider Images
@@ -41,12 +26,12 @@ export default function LandingPage() {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
-  // Sample Product Data
+  // Product Data
   const products = [
-    { id: 1, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '$2000' },
-    { id: 2, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '$2000' },
-    { id: 3, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '$2000' },
-    { id: 4, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '$2000' },
+    { id: 1, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '₦1,500' },
+    { id: 2, name: 'KARSON CLASSIC PACK', sub: '(Executive)', price: '₦2,500' },
+    { id: 3, name: 'KARSON PLUS PACK', sub: '(Family)', price: '₦10,000' },
+    { id: 4, name: 'KARSON PREMIUM', sub: '(Events)', price: '₦40,000' },
   ];
 
   // Sample Reviews Data
@@ -76,42 +61,11 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF0] text-[#1E1E1E] font-sans overflow-x-clip">
-      
-      {/* --- HEADER / NAVBAR --- */}
-      <header className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <div className="text-2xl font-black tracking-tight text-[#1E1E1E]">
-          Karson Bars
-        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-700">
-          <a href="#home" className="hover:text-[#801B1B] transition-colors">Home</a>
-          <a href="#about" className="hover:text-[#801B1B] transition-colors">About Us</a>
-          <a href="#products" className="hover:text-[#801B1B] transition-colors">Products</a>
-          <a href="#contact" className="hover:text-[#801B1B] transition-colors">Contact Us</a>
-        </nav>
-
-        {/* Mobile Toggle Button */}
-        <button 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-gray-700 focus:outline-none"
-        >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </header>
-
-      {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
-        <div className="bg-[#FFFDF0] px-6 pb-6 pt-2 space-y-4 border-b border-yellow-200/50">
-          <a href="#home" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Home</a>
-          <a href="#about" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>About Us</a>
-          <a href="#products" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Products</a>
-          <a href="#contact" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Contact Us</a>
-        </div>
-      </div>
+      <Header />
 
       {/* --- HERO SECTION --- */}
-<section id="home" className="max-w-7xl mx-auto px-6 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <section id="home" className="max-w-7xl mx-auto px-6 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#1E1E1E]">
             Order Your Healthy <br className="hidden sm:block" />
@@ -121,15 +75,15 @@ export default function LandingPage() {
             We make healthy snack for kids, adults and a whole family, can use for breakfast.
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <button className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm">
+            <Link href="/order" className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm">
               <span>Order Now</span>
               <div className="w-5 h-5 rounded-full border border-white/40 flex items-center justify-center text-xs">
                 ➔
               </div>
-            </button>
-            <button className="border border-[#801B1B] text-[#801B1B] px-6 py-3 rounded-md text-sm font-medium hover:bg-[#801B1B]/5 transition-colors">
-              Become a Distributor
-            </button>
+            </Link>
+            <Link href="/about" className="border border-[#801B1B] text-[#801B1B] px-6 py-3 rounded-md text-sm font-medium hover:bg-[#801B1B]/5 transition-colors">
+              Learn More
+            </Link>
           </div>
         </div>
 
@@ -202,6 +156,8 @@ export default function LandingPage() {
         </div>
       </section>
 
+       
+
       {/* --- OUR PRODUCTS SECTION --- */}
       <section id="products" className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">Our Products</h2>
@@ -226,9 +182,9 @@ export default function LandingPage() {
                 <p className="text-xs text-gray-500">{product.sub}</p>
                 <div className="flex items-center justify-between pt-3">
                   <span className="font-bold text-sm text-gray-900">{product.price}</span>
-                  <button className="text-xs text-[#801B1B] font-medium hover:underline">
+                  <Link href="/order" className="text-xs text-[#801B1B] font-medium hover:underline">
                     Place an Order
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -263,15 +219,15 @@ export default function LandingPage() {
                     </p>
                   </div>
                   <div className="flex items-center space-x-3 pt-2">
-                  <div className="relative w-9 h-9 rounded-full shrink-0">
-                    <Image
-                      src={rev.avatar}
-                      alt={rev.author}
-                      fill
-                      sizes="36px"
-                      className="rounded-full object-cover"
-                    />
-                  </div>
+                    <div className="relative w-9 h-9 rounded-full shrink-0">
+                      <Image
+                        src={rev.avatar}
+                        alt={rev.author}
+                        fill
+                        sizes="36px"
+                        className="rounded-full object-cover"
+                      />
+                    </div>
                     <div>
                       <h4 className="font-bold text-xs text-gray-900">{rev.author}</h4>
                       <p className="text-[10px] text-gray-500">{rev.role}</p>
@@ -297,13 +253,13 @@ export default function LandingPage() {
         </p>
 
         <form onSubmit={(e) => e.preventDefault()} className="max-w-xl mx-auto flex flex-col sm:flex-row items-center gap-3">
-          <input 
-            type="text" 
-            placeholder="Send us a message" 
+          <input
+            type="text"
+            placeholder="Send us a message"
             className="w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
           />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="w-full sm:w-auto bg-[#801B1B] text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-[#601414] transition-colors shrink-0"
           >
             Submit
@@ -311,47 +267,7 @@ export default function LandingPage() {
         </form>
       </section>
 
-      {/* --- FOOTER --- */}
-      <footer className="max-w-7xl mx-auto px-6 pt-10 pb-8 border-t border-yellow-200/50">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-          {/* Footer Nav */}
-          <div className="flex items-center space-x-6 text-xs text-gray-700">
-            <a href="#home" className="hover:underline">Home</a>
-            <a href="#about" className="hover:underline">About Us</a>
-            <a href="#products" className="hover:underline">Products</a>
-            <a href="#contact" className="hover:underline">Contact Us</a>
-          </div>
-
-          {/* Social Icons */}
-          <div className="flex items-center space-x-3">
-            <a href="#" className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors">
-              <InstagramIcon size={14} />
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors">
-              <MessageCircle size={14} />
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors">
-              <Share2 size={14} />
-            </a>
-          </div>
-        </div>
-
-        {/* Large Branding Text */}
-        <div className="text-center my-8">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#1E1E1E]">
-            Karson Bars
-          </h1>
-        </div>
-
-        {/* Legal / Copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500 pt-6 border-t border-gray-200/60 gap-4">
-          <p>© 2028 Karson Bars powered by Glitz</p>
-          <div className="flex items-center space-x-6">
-            <a href="#" className="hover:underline">Terms & Conditions</a>
-            <a href="#" className="hover:underline">Private Policy</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   );
