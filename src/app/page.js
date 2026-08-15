@@ -26,10 +26,10 @@ export default function LandingPage() {
 
   // Hero Slider Images
   const heroImages = [
-    "/product1.png",
-    "/product2.png",
+    "/hero.png",
+    "/hero1.png",
     "/product3.png",
-    "/product4.png",
+    "/hero2.png",
   ];
 
   const prevSlide = useCallback(() => setSlideIndex((i) => (i === 0 ? heroImages.length - 1 : i - 1)), [heroImages.length]);
