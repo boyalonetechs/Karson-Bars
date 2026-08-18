@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Karson Bars",
-  description: "We make healthy snack for kids, adults and a whole family, can use for breakfast.",
+  title: "Gifter Breadfruit Bars",
+  description: "We make healthy, proteinous snack bars from African breadfruit for kids, adults and whole families.",
 };
 
 export default function RootLayout({ children }) {

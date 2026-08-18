@@ -19,7 +19,7 @@ export async function POST(request) {
       method: 'POST',
       body: catboxForm,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; KarsonBars/1.0)',
+        'User-Agent': 'Mozilla/5.0 (compatible; GifterBreadfruitBars/1.0)',
       },
     });
 

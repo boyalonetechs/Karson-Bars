@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
 export default function Header() {
@@ -8,9 +9,18 @@ export default function Header() {
 
   return (
     <>
-      <header className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-black tracking-tight text-[#1E1E1E]">
-          Karson Bars
+      <header className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link href="/" className="flex items-center space-x-3">
+          <Image
+            src="/logo.jpeg"
+            alt="Gifter Breadfruit Bars"
+            width={48}
+            height={48}
+            className="rounded-full object-cover"
+          />
+          <span className="hidden sm:inline text-xl font-black tracking-tight text-[#1E1E1E]">
+            Gifter Breadfruit Bars
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -18,7 +28,7 @@ export default function Header() {
           <Link href="/" className="hover:text-[#801B1B] transition-colors">Home</Link>
           <Link href="/about" className="hover:text-[#801B1B] transition-colors">About Us</Link>
           <Link href="/#products" className="hover:text-[#801B1B] transition-colors">Products</Link>
-          <Link href="/#contact" className="hover:text-[#801B1B] transition-colors">Contact Us</Link>
+          <Link href="/contact" className="hover:text-[#801B1B] transition-colors">Contact Us</Link>
         </nav>
 
         {/* Mobile Toggle Button */}
@@ -36,7 +46,7 @@ export default function Header() {
           <Link href="/" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Home</Link>
           <Link href="/about" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
           <Link href="/#products" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Products</Link>
-          <Link href="/#contact" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
+          <Link href="/contact" className="block text-sm font-medium text-gray-700" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
         </div>
       </div>
     </>

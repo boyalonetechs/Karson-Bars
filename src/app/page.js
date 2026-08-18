@@ -2,12 +2,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, Leaf, Sparkles } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { buildWhatsAppLink } from '@/lib/constants';
 
 export default function LandingPage() {
   const [slideIndex, setSlideIndex] = useState(0);
+  const [distributorName, setDistributorName] = useState('');
+  const [distributorPhone, setDistributorPhone] = useState('');
+  const [distributorLocation, setDistributorLocation] = useState('');
+  const [distributorMessage, setDistributorMessage] = useState('');
 
   // Hero Slider Images
   const heroImages = [
@@ -28,10 +33,34 @@ export default function LandingPage() {
 
   // Product Data
   const products = [
-    { id: 1, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '₦1,500' },
-    { id: 2, name: 'KARSON CLASSIC PACK', sub: '(Executive)', price: '₦2,500' },
-    { id: 3, name: 'KARSON PLUS PACK', sub: '(Family)', price: '₦10,000' },
-    { id: 4, name: 'KARSON PREMIUM', sub: '(Events)', price: '₦40,000' },
+    {
+      id: 1,
+      name: 'GIFTER SOLO PACK',
+      sub: 'For One Person',
+      desc: 'A single pack of wholesome breadfruit bars, crafted for one person to enjoy anywhere.',
+      price: '₦1,500',
+    },
+    {
+      id: 2,
+      name: 'GIFTER CLASSIC PACK',
+      sub: 'For Two People',
+      desc: 'Two packs of healthy breadfruit bars with complementary protein, ideal for a pair.',
+      price: '₦2,500',
+    },
+    {
+      id: 3,
+      name: 'GIFTER PLUS PACK',
+      sub: 'For Four People',
+      desc: 'Four packs of nutritious breadfruit bars with complementary protein, perfect for the whole family.',
+      price: '₦10,000',
+    },
+    {
+      id: 4,
+      name: 'GIFTER PREMIUM PACK',
+      sub: 'For Events (30+ People)',
+      desc: 'A generous bulk pack of breadfruit bars with complementary protein, suited for events and gatherings of 30 people or more.',
+      price: '₦40,000',
+    },
   ];
 
   // Sample Reviews Data
@@ -69,10 +98,10 @@ export default function LandingPage() {
         <div className="space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#1E1E1E]">
             Order Your Healthy <br className="hidden sm:block" />
-            Family Snacks
+            Food Snacks
           </h1>
           <p className="text-gray-600 text-sm md:text-base max-w-md">
-            We make healthy snack for kids, adults and a whole family, can use for breakfast.
+            We make healthy snack for kids, adults, whole families and events.
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link href="/order" className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm">
@@ -92,7 +121,7 @@ export default function LandingPage() {
             <Image
               key={src}
               src={src}
-              alt={`Karson Bars hero ${idx + 1}`}
+              alt={`Gifter Breadfruit Bars hero ${idx + 1}`}
               width={900}
               height={900}
               className={`row-start-2 md:row-start-1 col-start-1 md:col-start-2 w-full aspect-square object-cover transition-all duration-500 ease-in-out ${idx === slideIndex ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
@@ -133,21 +162,37 @@ export default function LandingPage() {
       {/* --- WHY ORDER FROM US SECTION --- */}
       <section id="about" className="bg-[#801B1B] text-white py-16 px-6">
         <div className="max-w-7xl mx-auto text-center space-y-3">
-          <h2 className="text-2xl md:text-3xl font-bold">Why Order From Us</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">Why Gifter Breadfruit Bars</h2>
           <p className="text-xs md:text-sm text-red-100 max-w-xl mx-auto">
-            We produce and deliver quality snack that enriches your health.
+            A tasty, wholesome snack that nourishes your body — naturally.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 text-left">
-            {[1, 2, 3].map((_, idx) => (
+            {[
+              {
+                icon: Sparkles,
+                title: 'High in Protein',
+                text: 'Rich in plant protein that supports muscle health and keeps you feeling full and energised throughout the day.',
+              },
+              {
+                icon: Heart,
+                title: 'Healthy & Nutritious',
+                text: 'Packed with dietary fibre, vitamins and minerals to support digestion and overall well-being for the whole family.',
+              },
+              {
+                icon: Leaf,
+                title: 'Natural & Convenient',
+                text: 'A ready-to-eat plant-based snack made from African breadfruit — perfect for work, school, travel and events.',
+              },
+            ].map((item, idx) => (
               <div key={idx} className="bg-[#FAD02C] text-[#1E1E1E] p-5 rounded-xl flex items-start space-x-4 shadow-md">
                 <div className="bg-white p-2.5 rounded-full text-[#1E1E1E] shrink-0 mt-0.5">
-                  <ShoppingCart size={18} />
+                  <item.icon size={18} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm md:text-base mb-1">Fast Production</h3>
+                  <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
                   <p className="text-xs text-gray-800 leading-relaxed">
-                    We produce our product fast enough to meet up with our customer orders.
+                    {item.text}
                   </p>
                 </div>
               </div>
@@ -177,9 +222,10 @@ export default function LandingPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-col flex-1">
                 <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">{product.name}</h3>
                 <p className="text-xs text-gray-500">{product.sub}</p>
+                <p className="text-xs text-gray-600 leading-relaxed pt-1 flex-1">{product.desc}</p>
                 <div className="flex items-center justify-between pt-3">
                   <span className="font-bold text-sm text-gray-900">{product.price}</span>
                   <Link href="/order" className="text-xs text-[#801B1B] font-medium hover:underline">
@@ -249,20 +295,50 @@ export default function LandingPage() {
       <section id="contact" className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">Be A Distributor</h2>
         <p className="text-xs md:text-sm text-gray-600 mb-8 max-w-sm mx-auto">
-          Become a distributor of Karson Bars by contacting us
+          Become a distributor of Gifter Breadfruit Bars by filling the form below — we will reach out to you on WhatsApp.
         </p>
 
-        <form onSubmit={(e) => e.preventDefault()} className="max-w-xl mx-auto flex flex-col sm:flex-row items-center gap-3">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const text = `Distributor Enquiry\n\nName: ${distributorName || 'N/A'}\nPhone: ${distributorPhone || 'N/A'}\nLocation: ${distributorLocation || 'N/A'}\n\nMessage: ${distributorMessage || 'N/A'}`;
+            window.location.href = buildWhatsAppLink(text);
+          }}
+          className="max-w-xl mx-auto flex flex-col gap-3 text-left"
+        >
           <input
             type="text"
-            placeholder="Send us a message"
+            value={distributorName}
+            onChange={(e) => setDistributorName(e.target.value)}
+            placeholder="Your full name"
+            className="w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
+          />
+          <input
+            type="tel"
+            value={distributorPhone}
+            onChange={(e) => setDistributorPhone(e.target.value)}
+            placeholder="Your phone number"
+            className="w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
+          />
+          <input
+            type="text"
+            value={distributorLocation}
+            onChange={(e) => setDistributorLocation(e.target.value)}
+            placeholder="Your location (City / State)"
+            className="w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#8011B1]/40"
+          />
+          <textarea
+            value={distributorMessage}
+            onChange={(e) => setDistributorMessage(e.target.value)}
+            placeholder="Tell us a little about yourself and where you would like to distribute"
+            rows={3}
             className="w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
           />
           <button
             type="submit"
-            className="w-full sm:w-auto bg-[#801B1B] text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-[#601414] transition-colors shrink-0"
+            className="w-full bg-[#801B1B] text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-[#601414] transition-colors shrink-0"
           >
-            Submit
+            Send Enquiry via WhatsApp
           </button>
         </form>
       </section>

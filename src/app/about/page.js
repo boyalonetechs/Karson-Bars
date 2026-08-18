@@ -29,7 +29,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">About Us</h2>
             <p className="text-xs md:text-sm text-gray-500 max-w-xl mx-auto">
-              Gifta Multi Services Ltd — the home of Karson Bars
+              Gifta Multi Services Ltd — the home of Gifter Breadfruit Bars
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export default function AboutPage() {
                 <strong className="text-[#801B1B]">GIFTA MULTI SERVICES LTD</strong> is a business company registered with CAC in 2011. Gifta is registered with the Federal Ministry of Industry, Trade and Investment Commercial Law Department with a Trademark Acceptance on 18th April, 2026 under product class 30.
               </p>
               <p>
-                Gifta produces a Specialty Food known as <strong>Karson Bars</strong>, which has also been registered with NAFDAC. Karson Bars is a completely plant-based food snack produced under extensive and intensive research — a more nutritious and convenient alternative to the utilisation of African breadfruit seeds other than the traditional roasting or boiling and consuming as porridge meals.
+                Gifta produces a Specialty Food known as <strong>Gifter Breadfruit Bars</strong>, which has also been registered with NAFDAC. Gifter Breadfruit Bars is a completely plant-based food snack produced under extensive and intensive research — a more nutritious and convenient alternative to the utilisation of African breadfruit seeds other than the traditional roasting or boiling and consuming as porridge meals.
               </p>
             </div>
 
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { icon: Award, title: 'CAC Registered', sub: 'Business company since 2011' },
-                { icon: BadgeCheck, title: 'NAFDAC Registered', sub: 'Karson Bars certified' },
+                { icon: BadgeCheck, title: 'NAFDAC Registered', sub: 'Gifter Breadfruit Bars certified' },
                 { icon: Sparkles, title: 'Trademark Accepted', sub: '18th April 2026 · Class 30' },
                 { icon: Leaf, title: '100% Plant-Based', sub: 'Made from African breadfruit seeds' },
               ].map((item, idx) => (
@@ -72,13 +72,13 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-center text-2xl md:text-3xl font-bold mb-2">Founder&apos;s Introduction</h2>
           <p className="text-center text-xs md:text-sm text-red-100 mb-12">
-            The mind behind Karson Bars
+            The mind behind Gifter Breadfruit Bars
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
             <div className="lg:col-span-2 space-y-4 text-sm text-red-50 leading-relaxed">
               <p>
-                The Founder and Developer of Karson Bars is <strong className="text-white">Professor Titus Ugochukwu Nwabueze</strong>. He is a Professor of Food Science and Technology with specialization in postharvest management of crops, particularly of African breadfruit (<em>Treculia africana, ukwa</em>) seeds utilisation.
+                The Founder and Developer of Gifter Breadfruit Bars is <strong className="text-white">Professor Titus Ugochukwu Nwabueze</strong>. He is a Professor of Food Science and Technology with specialization in postharvest management of crops, particularly of African breadfruit (<em>Treculia africana, ukwa</em>) seeds utilisation.
               </p>
               <p>
                 Technologically, he specializes in <strong className="text-white">Food Extrusion Technology and Process Optimization</strong>, using African breadfruit seeds. By this specialization, he is a Food Products Formulator and Developer, with value addition as his target. This has taken him to more than 8 countries in the world, including the USA, Canada, and Brazil.
@@ -118,7 +118,7 @@ export default function AboutPage() {
               My retirement from Michael Okpara University of Agriculture Umudike on 9th January 2025, after 20 years of professorship, opened a divinely awaited opportunity to translate the wealth of my intense research on African breadfruit utilization beyond roasting as snacks with palm kernels and boiling into porridge meals.
             </p>
             <p>
-              African breadfruit was my pivot in my inaugural lecture in 2018, titled <em className="text-[#801B1B] font-semibold">BREAD ON THE TREE</em>. Ordinarily, raw African breadfruit seeds are seasonal and do not last beyond 3–4 days before they shrivel and dry up. This makes their processing and transformation into special products like Karson Bars — which can last beyond one week — of great value, considering particularly that African breadfruit is seasonal and hard to cook.
+              African breadfruit was my pivot in my inaugural lecture in 2018, titled <em className="text-[#801B1B] font-semibold">BREAD ON THE TREE</em>. Ordinarily, raw African breadfruit seeds are seasonal and do not last beyond 3–4 days before they shrivel and dry up. This makes their processing and transformation into special products like Gifter Breadfruit Bars — which can last beyond one week — of great value, considering particularly that African breadfruit is seasonal and hard to cook.
             </p>
           </div>
           <div className="lg:col-span-2">
@@ -140,7 +140,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-center text-2xl md:text-3xl font-bold mb-2">Exhibitions, Trade Fairs &amp; Conferences</h2>
           <p className="text-center text-xs md:text-sm text-red-100 mb-12">
-            Sharing Karson Bars across Nigeria and beyond
+            Sharing Gifter Breadfruit Bars across Nigeria and beyond
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -148,12 +148,12 @@ export default function AboutPage() {
               {
                 icon: Trophy,
                 title: 'Umuahia Mega Trade Fair',
-                sub: 'Karson Bars was exhibited at the Shop Rite Umuahia between 5th–7th December, 2025.',
+                sub: 'Gifter Breadfruit Bars was exhibited at the Shop Rite Umuahia between 5th–7th December, 2025.',
               },
               {
                 icon: Sparkles,
                 title: 'Ohafia Mega Exhibition',
-                sub: 'Organisers located and invited Gifta to display Karson Bars at their trade fairs.',
+                sub: 'Organisers located and invited Gifta to display Gifter Breadfruit Bars at their trade fairs.',
               },
               {
                 icon: Users,
@@ -183,7 +183,7 @@ export default function AboutPage() {
       <section className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">Solving the Nutritional Problems</h2>
         <p className="text-xs md:text-sm text-gray-500 mb-12 max-w-xl mx-auto">
-          Karson Bars is not just another snack food. It is a food snack formulated and developed from selected legumes and cereals to meet the nutritional needs of the society.
+          Gifter Breadfruit Bars is not just another snack food. It is a food snack formulated and developed from selected legumes and cereals to meet the nutritional needs of the society.
         </p>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -205,7 +205,7 @@ export default function AboutPage() {
         </div>
 
         <p className="text-sm text-gray-700 leading-relaxed max-w-3xl mx-auto mt-10">
-          Consumption of starch-based snacks, or at most single legumes or cereals, is not good enough where a better and nutrient-enriched alternative like Karson Bars is possible. Karson Bars is tasty, nutritious, satiable, and digestive. It enhances fluid intake into the body — such as water, breakfast tea, coffee, midday beverages like minerals, fruit juice and local fluid preparations.
+          Consumption of starch-based snacks, or at most single legumes or cereals, is not good enough where a better and nutrient-enriched alternative like Gifter Breadfruit Bars is possible. Gifter Breadfruit Bars is tasty, nutritious, satiable, and digestive. It enhances fluid intake into the body — such as water, breakfast tea, coffee, midday beverages like minerals, fruit juice and local fluid preparations.
         </p>
       </section>
 
@@ -213,7 +213,7 @@ export default function AboutPage() {
       <section className="max-w-7xl mx-auto px-6 pb-20 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">Core Values</h2>
         <p className="text-xs md:text-sm text-gray-500 mb-12 max-w-xl mx-auto">
-          What makes Karson Bars the companion you can count on — at work, at home and everywhere in between
+          What makes Gifter Breadfruit Bars the companion you can count on — at work, at home and everywhere in between
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

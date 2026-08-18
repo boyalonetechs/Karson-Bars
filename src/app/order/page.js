@@ -8,26 +8,61 @@ import {
   Check,
   MessageCircle,
   Smartphone,
+  Minus,
+  Plus,
+  Beef,
 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { buildWhatsAppLink } from '@/lib/constants';
 
 const ACCOUNT_NAME = 'Titus Ugochukwu Nwabueze';
 const ACCOUNT_NUMBER = '0046473137';
 const BANK_NAME = 'GTBank';
 
-const WHATSAPP_NUMBER = '2348035422843';
-
 const products = [
-  { id: 1, name: 'KARSON SOLO PACK', sub: '(Individual)', price: '₦1,500' },
-  { id: 2, name: 'KARSON CLASSIC PACK', sub: '(Executive)', price: '₦2,500' },
-  { id: 3, name: 'KARSON PLUS PACK', sub: '(Family)', price: '₦10,000' },
-  { id: 4, name: 'KARSON PREMIUM', sub: '(Events)', price: '₦40,000' },
+  {
+    id: 1,
+    name: 'GIFTER SOLO PACK',
+    sub: 'For One Person',
+    desc: 'A single pack of wholesome breadfruit bars, crafted for one person to enjoy anywhere.',
+    price: '₦1,500',
+    hasProtein: false,
+  },
+  {
+    id: 2,
+    name: 'GIFTER CLASSIC PACK',
+    sub: 'For Two People',
+    desc: 'Two packs of healthy breadfruit bars with complementary protein, ideal for a pair.',
+    price: '₦2,500',
+    hasProtein: true,
+  },
+  {
+    id: 3,
+    name: 'GIFTER PLUS PACK',
+    sub: 'For Four People',
+    desc: 'Four packs of nutritious breadfruit bars with complementary protein, perfect for the whole family.',
+    price: '₦10,000',
+    hasProtein: true,
+  },
+  {
+    id: 4,
+    name: 'GIFTER PREMIUM PACK',
+    sub: 'For Events (30+ People)',
+    desc: 'A generous bulk pack of breadfruit bars with complementary protein, suited for events and gatherings of 30 people or more.',
+    price: '₦40,000',
+    hasProtein: true,
+  },
 ];
+
+const proteinOptions = ['Chicken', 'Beef', 'Fish', 'Other'];
 
 export default function OrderPage() {
   const [name, setName] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(products[0].name);
+  const [quantity, setQuantity] = useState(1);
+  const [protein, setProtein] = useState('Chicken');
+  const [otherProtein, setOtherProtein] = useState('');
   const [address, setAddress] = useState('');
   const [location, setLocation] = useState('');
   const [file, setFile] = useState(null);
@@ -35,6 +70,8 @@ export default function OrderPage() {
   const [copied, setCopied] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+
+  const selectedProductData = products.find((p) => p.name === selectedProduct);
 
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
@@ -55,7 +92,12 @@ export default function OrderPage() {
   };
 
   const buildMessage = () => {
-    return `Karson Bars Order Payment Proof\n\nName: ${name || 'N/A'}\nProduct: ${selectedProduct}\n\nDelivery Details:\nAddress: ${address || 'N/A'}\nLocation: ${location || 'N/A'}\n\nPayment Details:\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have attached my proof of payment receipt. Please confirm my order.`;
+    const proteinText =
+      selectedProductData?.hasProtein
+        ? `\nComplementary Protein: ${protein === 'Other' ? otherProtein || 'Other' : protein}`
+        : '';
+
+    return `Gifter Breadfruit Bars Order\n\nName: ${name || 'N/A'}\nProduct: ${selectedProduct}\nQuantity: ${quantity}${proteinText}\n\nDelivery Details:\nAddress: ${address || 'N/A'}\nLocation: ${location || 'N/A'}\n\nPayment Details:\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have attached my proof of payment receipt. Please confirm my order.`;
   };
 
   const handleSend = async () => {
@@ -82,7 +124,7 @@ export default function OrderPage() {
       setUploading(false);
     }
 
-    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    window.location.href = buildWhatsAppLink(text);
   };
 
   return (
@@ -108,10 +150,78 @@ export default function OrderPage() {
             >
               <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">{product.name}</h3>
               <p className="text-xs text-gray-500">{product.sub}</p>
-              <p className="font-bold text-sm text-[#801B1B] mt-1">{product.price}</p>
+              <p className="text-xs text-gray-600 leading-relaxed mt-1">{product.desc}</p>
+              <p className="font-bold text-sm text-[#801B1B] mt-2">{product.price}</p>
             </button>
           ))}
         </div>
+
+        {/* Quantity Selector */}
+        <div className="mt-8 bg-white/60 border border-yellow-200/50 rounded-2xl p-6 text-left shadow-sm">
+          <label className="text-xs font-semibold text-gray-700">Quantity</label>
+          <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors"
+                aria-label="Decrease quantity"
+              >
+                <Minus size={16} />
+              </button>
+              <span className="w-10 text-center font-bold text-lg">{quantity}</span>
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => q + 1)}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors"
+                aria-label="Increase quantity"
+              >
+                <Plus size={16} />
+              </button>
+            </div>
+            <p className="text-xs text-gray-500">
+              Pack{quantity > 1 ? 's' : ''}: {quantity} × {selectedProductData?.price || '₦0'}
+            </p>
+          </div>
+        </div>
+
+        {/* Complementary Protein Selector */}
+        {selectedProductData?.hasProtein && (
+          <div className="mt-6 bg-white/60 border border-yellow-200/50 rounded-2xl p-6 text-left shadow-sm">
+            <div className="flex items-center space-x-2 mb-3">
+              <div className="bg-[#FAD02C] p-2 rounded-full text-[#1E1E1E]">
+                <Beef size={16} />
+              </div>
+              <div>
+                <h3 className="font-bold text-sm text-gray-900">Complementary Protein</h3>
+                <p className="text-xs text-gray-500">Included with this pack — the same choice applies to all protein packs.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {proteinOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setProtein(option)}
+                  className={`rounded-xl px-4 py-3 text-sm font-semibold border transition-all ${protein === option ? 'bg-[#801B1B] text-white border-[#801B1B]' : 'bg-white border-gray-300 text-gray-700 hover:border-[#801B1B]'}`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+
+            {protein === 'Other' && (
+              <input
+                type="text"
+                value={otherProtein}
+                onChange={(e) => setOtherProtein(e.target.value)}
+                placeholder="Specify your preferred protein (e.g. Goat meat)"
+                className="mt-3 w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
+              />
+            )}
+          </div>
+        )}
 
         {/* Payment Card */}
         <div className="mt-10 bg-[#801B1B] text-white rounded-3xl p-8 text-left shadow-lg">
