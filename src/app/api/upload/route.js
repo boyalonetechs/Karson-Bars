@@ -19,6 +19,7 @@ export async function POST(request) {
       file.name || "receipt",
     );
 
+
     const res = await fetch("https://catbox.moe/user/api.php", {
       method: "POST",
       body: catboxForm,

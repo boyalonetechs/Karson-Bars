@@ -16,10 +16,10 @@ export default function LandingPage() {
 
   // Hero Slider Images
   const heroImages = [
-    "/hero.png",
-    "/hero1.png",
-    "/product3.png",
-    "/hero2.png",
+    "/bar1.png",
+    "/bar2.png",
+    "/bar3.png",
+    "/bar4.png",
   ];
 
   const prevSlide = useCallback(() => setSlideIndex((i) => (i === 0 ? heroImages.length - 1 : i - 1)), [heroImages.length]);
@@ -215,7 +215,7 @@ export default function LandingPage() {
             <div key={product.id} className="bg-white/60 rounded-2xl p-4 border border-yellow-200/50 flex flex-col justify-between text-left shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-40 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
                 <Image
-                  src={`/product${product.id}.png`}
+                  src={`/bar${product.id}.png`}
                   alt={product.name}
                   width={400}
                   height={400}
