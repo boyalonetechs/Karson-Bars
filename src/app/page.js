@@ -104,7 +104,7 @@ export default function LandingPage() {
             We make healthy snack for kids, adults, whole families and events.
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Link href="/order" className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm">
+            <Link href="/order?product=1" className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm">
               <span>Order Now</span>
               <div className="w-5 h-5 rounded-full border border-white/40 flex items-center justify-center text-xs">
                 ➔

@@ -66,6 +66,7 @@ function OrderContent() {
 
   const [name, setName] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(initialProduct);
+  const [showAllPacks, setShowAllPacks] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [protein, setProtein] = useState('Chicken');
   const [otherProtein, setOtherProtein] = useState('');
@@ -146,20 +147,29 @@ function OrderContent() {
         </p>
 
         {/* Product Selector */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10 text-left">
-          {products.map((product) => (
-            <button
-              key={product.id}
-              type="button"
-              onClick={() => setSelectedProduct(product.name)}
-              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct === product.name ? 'bg-[#FAD02C] border-[#801B1B]' : 'bg-white/60 border-yellow-200/50'}`}
-            >
-              <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">{product.name}</h3>
-              <p className="text-xs text-gray-500">{product.sub}</p>
-              <p className="text-xs text-gray-600 leading-relaxed mt-1">{product.desc}</p>
-              <p className="font-bold text-sm text-[#801B1B] mt-2">{product.price}</p>
-            </button>
-          ))}
+        <div className="mt-10 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {(showAllPacks ? products : [selectedProductData]).map((product) => (
+              <button
+                key={product.id}
+                type="button"
+                onClick={() => setSelectedProduct(product.name)}
+                className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct === product.name ? 'bg-[#FAD02C] border-[#801B1B]' : 'bg-white/60 border-yellow-200/50'}`}
+              >
+                <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">{product.name}</h3>
+                <p className="text-xs text-gray-500">{product.sub}</p>
+                <p className="text-xs text-gray-600 leading-relaxed mt-1">{product.desc}</p>
+                <p className="font-bold text-sm text-[#801B1B] mt-2">{product.price}</p>
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowAllPacks(!showAllPacks)}
+            className="mt-4 text-xs text-[#801B1B] font-medium hover:underline"
+          >
+            {showAllPacks ? 'Show only the selected pack' : 'View all packs'}
+          </button>
         </div>
 
         {/* Quantity Selector */}
@@ -363,7 +373,7 @@ function OrderContent() {
           type="button"
           onClick={handleSend}
           disabled={uploading || !file}
-          className="mt-8 w-full bg-[#25D366] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#1fbf5a] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+          className="mt-8 w-full bg-[#801B1B] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#601414] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <MessageCircle size={18} />
           <span>{uploading ? 'Uploading receipt...' : 'Send Proof of Payment via WhatsApp'}</span>

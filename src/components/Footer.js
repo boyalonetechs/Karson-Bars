@@ -47,11 +47,11 @@ export default function Footer() {
         <Image
           src="/logo.jpeg"
           alt="Gifter Breadfruit Bars"
-          width={96}
-          height={96}
+          width={48}
+          height={48}
           className="rounded-full object-cover"
         />
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#1E1E1E]">
+        <h1 className="font-display italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#801B1B]">
           Gifter Breadfruit Bars
         </h1>
       </div>

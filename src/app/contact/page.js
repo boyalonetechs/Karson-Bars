@@ -79,7 +79,7 @@ export default function ContactPage() {
             </div>
             <button
               type="submit"
-              className="w-full bg-[#25D366] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#1fbf5a] transition-colors shadow-md"
+              className="w-full bg-[#801B1B] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#601414] transition-colors shadow-md"
             >
               <MessageCircle size={18} />
               <span>Send via WhatsApp</span>
