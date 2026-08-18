@@ -1,5 +1,6 @@
 "use client"
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Banknote,
   Landmark,
@@ -57,9 +58,14 @@ const products = [
 
 const proteinOptions = ['Chicken', 'Beef', 'Fish', 'Other'];
 
-export default function OrderPage() {
+function OrderContent() {
+  const searchParams = useSearchParams();
+  const productParam = searchParams.get('product');
+  const initialProduct =
+    products.find((p) => p.id === Number(productParam))?.name || products[0].name;
+
   const [name, setName] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState(products[0].name);
+  const [selectedProduct, setSelectedProduct] = useState(initialProduct);
   const [quantity, setQuantity] = useState(1);
   const [protein, setProtein] = useState('Chicken');
   const [otherProtein, setOtherProtein] = useState('');
@@ -374,5 +380,13 @@ export default function OrderPage() {
       <Footer />
 
     </div>
+  );
+}
+
+export default function OrderPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrderContent />
+    </Suspense>
   );
 }

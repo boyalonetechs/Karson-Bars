@@ -228,7 +228,7 @@ export default function LandingPage() {
                 <p className="text-xs text-gray-600 leading-relaxed pt-1 flex-1">{product.desc}</p>
                 <div className="flex items-center justify-between pt-3">
                   <span className="font-bold text-sm text-gray-900">{product.price}</span>
-                  <Link href="/order" className="text-xs text-[#801B1B] font-medium hover:underline">
+                  <Link href={`/order?product=${product.id}`} className="text-xs text-[#801B1B] font-medium hover:underline">
                     Place an Order
                   </Link>
                 </div>
