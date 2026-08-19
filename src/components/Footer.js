@@ -45,11 +45,11 @@ export default function Footer() {
       {/* Large Branding Text */}
       <div className="text-center my-8 flex flex-col items-center space-y-4">
         <Image
-          src="/logo.jpeg"
+          src="/logo-t.png"
           alt="Gifter Breadfruit Bars"
-          width={48}
-          height={48}
-          className="rounded-full object-cover"
+          width={50}
+          height={50}
+          className="rounded-full scale-300 object-cover"
         />
         <h1 className="font-display italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#801B1B]">
           Gifter Breadfruit Bars

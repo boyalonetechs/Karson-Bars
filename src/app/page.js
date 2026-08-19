@@ -16,10 +16,10 @@ export default function LandingPage() {
 
   // Hero Slider Images
   const heroImages = [
-    "/bar1.png",
-    "/bar2.png",
-    "/bar3.png",
-    "/bar4.png",
+    "/hero1.png",
+    "/hero2.png",
+    "/hero3.png",
+    "/hero4.png",
   ];
 
   const prevSlide = useCallback(() => setSlideIndex((i) => (i === 0 ? heroImages.length - 1 : i - 1)), [heroImages.length]);
@@ -83,7 +83,7 @@ export default function LandingPage() {
       id: 3,
       quote: "The family pack is so good to taste and nutritious and nice to the mouth.",
       author: "Ralph Edwards",
-      role: "Trade Agent",
+      role: "Trade Agent",  
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150"
     },
   ];
@@ -219,7 +219,7 @@ export default function LandingPage() {
                   alt={product.name}
                   width={400}
                   height={400}
-                  className="w-full h-full object-cover"
+                  className="w-full scale-120 h-full object-cover"
                 />
               </div>
               <div className="space-y-1 flex flex-col flex-1">
