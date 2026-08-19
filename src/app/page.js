@@ -91,11 +91,17 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#FFFDF0] text-[#1E1E1E] font-sans overflow-x-clip">
 
-      <Header />
 
+      <Header />
       {/* --- HERO SECTION --- */}
-      <section id="home" className="max-w-7xl mx-auto px-6 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6">
+      <section id="home" className="relative max-w-7xl mx-auto px-6 py-12 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center overflow-hidden">
+        <Image
+          src="/overlay.jpg"
+          alt=""
+          fill
+          className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none z-0"
+        />
+        <div className="relative z-10 space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#1E1E1E]">
             Order Your Healthy <br className="hidden sm:block" />
             Food Snacks
@@ -124,7 +130,7 @@ export default function LandingPage() {
               alt={`Gifter Breadfruit Bars hero ${idx + 1}`}
               width={900}
               height={900}
-              className={`row-start-2 md:row-start-1 col-start-1 md:col-start-2 w-full aspect-square object-cover transition-all duration-500 ease-in-out ${idx === slideIndex ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
+              className={`relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 w-full aspect-square object-cover transition-all duration-500 ease-in-out ${idx === slideIndex ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
             />
           ))}
 
@@ -132,7 +138,7 @@ export default function LandingPage() {
           <button
             onClick={prevSlide}
             aria-label="Previous image"
-            className="row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-start self-center ml-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
+            className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-start self-center ml-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
           >
             <ChevronLeft size={18} />
           </button>
@@ -141,13 +147,13 @@ export default function LandingPage() {
           <button
             onClick={nextSlide}
             aria-label="Next image"
-            className="row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-end self-center mr-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
+            className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-end self-center mr-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
           >
             <ChevronRight size={18} />
           </button>
 
           {/* Dots Indicator */}
-          <div className="row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-center self-end mb-3 flex items-center gap-2">
+          <div className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-center self-end mb-3 flex items-center gap-2">
             {heroImages.map((_, idx) => (
               <button
                 key={idx}
