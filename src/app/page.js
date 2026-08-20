@@ -115,7 +115,7 @@ export default function LandingPage() {
             Food Snacks
           </h1>
           <p className="text-gray-600 text-sm md:text-base max-w-md">
-            We make healthy snack for kids, adults, whole families and events.
+            We make healthy Food Snacks for kids, adults, whole families and events.
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
