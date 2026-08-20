@@ -29,6 +29,7 @@ const products = [
     sub: "For One Person",
     desc: "A single pack of wholesome breadfruit bars, crafted for one person to enjoy anywhere.",
     price: "₦1,500",
+    rawPrice: 1500,
     hasProtein: false,
   },
   {
@@ -37,6 +38,7 @@ const products = [
     sub: "For Two People",
     desc: "Two packs of healthy breadfruit bars with complementary protein, ideal for a pair.",
     price: "₦2,500",
+    rawPrice: 2500,
     hasProtein: true,
   },
   {
@@ -45,6 +47,7 @@ const products = [
     sub: "For Four People",
     desc: "Four packs of nutritious breadfruit bars with complementary protein, perfect for the whole family.",
     price: "₦10,000",
+    rawPrice: 10000,
     hasProtein: true,
   },
   {
@@ -53,11 +56,15 @@ const products = [
     sub: "For Events (30+ People)",
     desc: "A generous bulk pack of breadfruit bars with complementary protein, suited for events and gatherings of 30 people or more.",
     price: "₦40,000",
+    rawPrice: 40000,
     hasProtein: true,
   },
 ];
 
-const proteinOptions = ["Chicken", "Beef", "Fish", "Other"];
+const proteinOptions = ["Chicken", "Beef"];
+
+const formatNaira = (value) =>
+  "₦" + value.toLocaleString("en-NG");
 
 function OrderContent() {
   const searchParams = useSearchParams();
@@ -104,8 +111,11 @@ function OrderContent() {
     const proteinText = selectedProductData?.hasProtein
       ? `\nComplementary Protein: ${protein === "Other" ? otherProtein || "Other" : protein}`
       : "";
+    const totalPrice = selectedProductData?.rawPrice
+      ? formatNaira(selectedProductData.rawPrice * quantity)
+      : "N/A";
 
-    return `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nProduct: ${selectedProduct}\nQuantity: ${quantity}${proteinText}\n\nDelivery Details:\nAddress: ${address || "N/A"}\nLocation: ${location || "N/A"}\n\nPayment Details:\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have attached my proof of payment receipt. Please confirm my order.`;
+    return `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nProduct: ${selectedProduct}\nQuantity: ${quantity}\nUnit Price: ${selectedProductData?.price || "N/A"}\nTotal Amount: ${totalPrice}${proteinText}\n\nDelivery Details:\nAddress: ${address || "N/A"}\nLocation: ${location || "N/A"}\n\nPayment Details:\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have attached my proof of payment receipt. Please confirm my order.`;
   };
 
   const handleSend = async () => {
@@ -220,6 +230,16 @@ function OrderContent() {
               {selectedProductData?.price || "₦0"}
             </p>
           </div>
+          {selectedProductData?.rawPrice && quantity > 0 && (
+            <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+              <span className="text-sm font-semibold text-gray-700">
+                Total Amount
+              </span>
+              <span className="text-lg font-bold text-[#801B1B]">
+                {formatNaira(selectedProductData.rawPrice * quantity)}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Complementary Protein Selector */}
