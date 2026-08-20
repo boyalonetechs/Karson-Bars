@@ -16,7 +16,7 @@ export default function Header() {
         >
           <Image
             src="/logo-t.png"
-            alt="Gifter Breadfruit Bars"
+            alt="Gifta Breadfruit Bars"
             width={60}
             height={48}
             className="rounded-full object-cover"

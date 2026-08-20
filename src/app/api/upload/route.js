@@ -19,12 +19,11 @@ export async function POST(request) {
       file.name || "receipt",
     );
 
-
     const res = await fetch("https://catbox.moe/user/api.php", {
       method: "POST",
       body: catboxForm,
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; GifterBreadfruitBars/1.0)",
+        "User-Agent": "Mozilla/5.0 (compatible; GiftaBreadfruitBars/1.0)",
       },
     });
 

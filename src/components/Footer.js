@@ -1,10 +1,19 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { MessageCircle, Share2 } from 'lucide-react';
-import { WHATSAPP_NUMBER, buildWhatsAppLink } from '@/lib/constants';
+import Link from "next/link";
+import Image from "next/image";
+import { MessageCircle, Share2 } from "lucide-react";
+import { WHATSAPP_NUMBER, buildWhatsAppLink } from "@/lib/constants";
 
 const InstagramIcon = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -17,26 +26,42 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
         {/* Footer Nav */}
         <div className="flex items-center space-x-6 text-xs text-gray-700">
-          <Link href="/" className="hover:underline">Home</Link>
-          <Link href="/about" className="hover:underline">About Us</Link>
-          <Link href="/#products" className="hover:underline">Products</Link>
-          <Link href="/contact" className="hover:underline">Contact Us</Link>
+          <Link href="/" className="hover:underline">
+            Home
+          </Link>
+          <Link href="/about" className="hover:underline">
+            About Us
+          </Link>
+          <Link href="/#products" className="hover:underline">
+            Products
+          </Link>
+          <Link href="/contact" className="hover:underline">
+            Contact Us
+          </Link>
         </div>
 
         {/* Social Icons */}
         <div className="flex items-center space-x-3">
-          <a href="#" className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors">
+          <a
+            href="#"
+            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors"
+          >
             <InstagramIcon size={14} />
           </a>
           <a
-            href={buildWhatsAppLink('Hello Gifter Breadfruit Bars, I would like to make an enquiry.')}
+            href={buildWhatsAppLink(
+              "Hello Gifta Breadfruit Bars, I would like to make an enquiry.",
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors"
           >
             <MessageCircle size={14} />
           </a>
-          <a href="#" className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors">
+          <a
+            href="#"
+            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors"
+          >
             <Share2 size={14} />
           </a>
         </div>
@@ -46,22 +71,26 @@ export default function Footer() {
       <div className="text-center my-8 flex flex-col items-center space-y-4">
         <Image
           src="/logo-t.png"
-          alt="Gifter Breadfruit Bars"
+          alt="Gifta Breadfruit Bars"
           width={50}
           height={50}
           className="rounded-full scale-300 object-cover"
         />
         <h1 className="font-display italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#801B1B]">
-          Gifter Breadfruit Bars
+          Gifta Breadfruit Bars
         </h1>
       </div>
 
       {/* Legal / Copyright */}
       <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500 pt-6 border-t border-gray-200/60 gap-4">
-        <p>© 2028 Gifter Breadfruit Bars powered by Glitz</p>
+        <p>© 2028 Gifta Breadfruit Bars powered by Glitz</p>
         <div className="flex items-center space-x-6">
-          <a href="#" className="hover:underline">Terms &amp; Conditions</a>
-          <a href="#" className="hover:underline">Private Policy</a>
+          <a href="#" className="hover:underline">
+            Terms &amp; Conditions
+          </a>
+          <a href="#" className="hover:underline">
+            Private Policy
+          </a>
         </div>
       </div>
     </footer>

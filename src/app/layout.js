@@ -17,8 +17,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata = {
-  title: "Gifter Breadfruit Bars",
-  description: "We make healthy, proteinous snack bars from African breadfruit for kids, adults and whole families.",
+  title: "Gifta Breadfruit Bars",
+  description:
+    "We make healthy, proteinous snack bars from African breadfruit for kids, adults and whole families.",
 };
 
 export default function RootLayout({ children }) {

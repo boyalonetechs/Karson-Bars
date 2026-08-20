@@ -1,6 +1,6 @@
-"use client"
-import React, { useState, useRef, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+"use client";
+import React, { useState, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Banknote,
   Landmark,
@@ -12,66 +12,67 @@ import {
   Minus,
   Plus,
   Beef,
-} from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { buildWhatsAppLink } from '@/lib/constants';
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { buildWhatsAppLink } from "@/lib/constants";
 
-const ACCOUNT_NAME = 'Titus Ugochukwu Nwabueze';
-const ACCOUNT_NUMBER = '0046473137';
-const BANK_NAME = 'GTBank';
+const ACCOUNT_NAME = "Titus Ugochukwu Nwabueze";
+const ACCOUNT_NUMBER = "0046473137";
+const BANK_NAME = "GTBank";
 
 const products = [
   {
     id: 1,
-    name: 'GIFTER SOLO PACK',
-    sub: 'For One Person',
-    desc: 'A single pack of wholesome breadfruit bars, crafted for one person to enjoy anywhere.',
-    price: '₦1,500',
+    name: "Gifta SOLO PACK",
+    sub: "For One Person",
+    desc: "A single pack of wholesome breadfruit bars, crafted for one person to enjoy anywhere.",
+    price: "₦1,500",
     hasProtein: false,
   },
   {
     id: 2,
-    name: 'GIFTER CLASSIC PACK',
-    sub: 'For Two People',
-    desc: 'Two packs of healthy breadfruit bars with complementary protein, ideal for a pair.',
-    price: '₦2,500',
+    name: "Gifta CLASSIC PACK",
+    sub: "For Two People",
+    desc: "Two packs of healthy breadfruit bars with complementary protein, ideal for a pair.",
+    price: "₦2,500",
     hasProtein: true,
   },
   {
     id: 3,
-    name: 'GIFTER PLUS PACK',
-    sub: 'For Four People',
-    desc: 'Four packs of nutritious breadfruit bars with complementary protein, perfect for the whole family.',
-    price: '₦10,000',
+    name: "Gifta PLUS PACK",
+    sub: "For Four People",
+    desc: "Four packs of nutritious breadfruit bars with complementary protein, perfect for the whole family.",
+    price: "₦10,000",
     hasProtein: true,
   },
   {
     id: 4,
-    name: 'GIFTER PREMIUM PACK',
-    sub: 'For Events (30+ People)',
-    desc: 'A generous bulk pack of breadfruit bars with complementary protein, suited for events and gatherings of 30 people or more.',
-    price: '₦40,000',
+    name: "Gifta PREMIUM PACK",
+    sub: "For Events (30+ People)",
+    desc: "A generous bulk pack of breadfruit bars with complementary protein, suited for events and gatherings of 30 people or more.",
+    price: "₦40,000",
     hasProtein: true,
   },
 ];
 
-const proteinOptions = ['Chicken', 'Beef', 'Fish', 'Other'];
+const proteinOptions = ["Chicken", "Beef", "Fish", "Other"];
 
 function OrderContent() {
   const searchParams = useSearchParams();
-  const productParam = searchParams.get('product');
+  const productParam = searchParams.get("product");
   const initialProduct =
-    products.find((p) => p.id === Number(productParam))?.name || products[0].name;
+    products.find((p) => p.id === Number(productParam))?.name ||
+    products[0].name;
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(initialProduct);
   const [showAllPacks, setShowAllPacks] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [protein, setProtein] = useState('Chicken');
-  const [otherProtein, setOtherProtein] = useState('');
-  const [address, setAddress] = useState('');
-  const [location, setLocation] = useState('');
+  const [protein, setProtein] = useState("Chicken");
+  const [otherProtein, setOtherProtein] = useState("");
+  const [address, setAddress] = useState("");
+  const [location, setLocation] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -99,12 +100,11 @@ function OrderContent() {
   };
 
   const buildMessage = () => {
-    const proteinText =
-      selectedProductData?.hasProtein
-        ? `\nComplementary Protein: ${protein === 'Other' ? otherProtein || 'Other' : protein}`
-        : '';
+    const proteinText = selectedProductData?.hasProtein
+      ? `\nComplementary Protein: ${protein === "Other" ? otherProtein || "Other" : protein}`
+      : "";
 
-    return `Gifter Breadfruit Bars Order\n\nName: ${name || 'N/A'}\nProduct: ${selectedProduct}\nQuantity: ${quantity}${proteinText}\n\nDelivery Details:\nAddress: ${address || 'N/A'}\nLocation: ${location || 'N/A'}\n\nPayment Details:\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have attached my proof of payment receipt. Please confirm my order.`;
+    return `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nProduct: ${selectedProduct}\nQuantity: ${quantity}${proteinText}\n\nDelivery Details:\nAddress: ${address || "N/A"}\nLocation: ${location || "N/A"}\n\nPayment Details:\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have attached my proof of payment receipt. Please confirm my order.`;
   };
 
   const handleSend = async () => {
@@ -116,16 +116,21 @@ function OrderContent() {
       setUploading(true);
       try {
         const uploadForm = new FormData();
-        uploadForm.append('file', file);
-        const res = await fetch('/api/upload', { method: 'POST', body: uploadForm });
+        uploadForm.append("file", file);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadForm,
+        });
         const data = await res.json();
         if (!res.ok || !data.url) {
-          throw new Error(data.error || 'Upload failed');
+          throw new Error(data.error || "Upload failed");
         }
         text = `${text}\n\nReceipt image: ${data.url}`;
       } catch {
         setUploading(false);
-        alert('Could not upload your receipt. Please check your connection and try again.');
+        alert(
+          "Could not upload your receipt. Please check your connection and try again.",
+        );
         return;
       }
       setUploading(false);
@@ -136,45 +141,57 @@ function OrderContent() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF0] text-[#1E1E1E] font-sans overflow-x-clip">
-
       <Header />
 
       {/* --- PAYMENT DETAILS --- */}
       <section className="max-w-3xl mx-auto px-6 py-14 text-center">
-        <h1 className="text-2xl md:text-4xl font-bold text-[#1E1E1E] mb-2">Place Your Order</h1>
+        <h1 className="text-2xl md:text-4xl font-bold text-[#1E1E1E] mb-2">
+          Place Your Order
+        </h1>
         <p className="text-xs md:text-sm text-gray-500 max-w-md mx-auto">
-          Choose your pack, make payment to the account below, then upload your proof of payment and send it to us on WhatsApp.
+          Choose your pack, make payment to the account below, then upload your
+          proof of payment and send it to us on WhatsApp.
         </p>
 
         {/* Product Selector */}
         <div className="mt-10 text-left">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {(showAllPacks ? products : [selectedProductData]).map((product) => (
-              <button
-                key={product.id}
-                type="button"
-                onClick={() => setSelectedProduct(product.name)}
-                className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct === product.name ? 'bg-[#FAD02C] border-[#801B1B]' : 'bg-white/60 border-yellow-200/50'}`}
-              >
-                <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">{product.name}</h3>
-                <p className="text-xs text-gray-500">{product.sub}</p>
-                <p className="text-xs text-gray-600 leading-relaxed mt-1">{product.desc}</p>
-                <p className="font-bold text-sm text-[#801B1B] mt-2">{product.price}</p>
-              </button>
-            ))}
+            {(showAllPacks ? products : [selectedProductData]).map(
+              (product) => (
+                <button
+                  key={product.id}
+                  type="button"
+                  onClick={() => setSelectedProduct(product.name)}
+                  className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct === product.name ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
+                >
+                  <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
+                    {product.name}
+                  </h3>
+                  <p className="text-xs text-gray-500">{product.sub}</p>
+                  <p className="text-xs text-gray-600 leading-relaxed mt-1">
+                    {product.desc}
+                  </p>
+                  <p className="font-bold text-sm text-[#801B1B] mt-2">
+                    {product.price}
+                  </p>
+                </button>
+              ),
+            )}
           </div>
           <button
             type="button"
             onClick={() => setShowAllPacks(!showAllPacks)}
             className="mt-4 text-xs text-[#801B1B] font-medium hover:underline"
           >
-            {showAllPacks ? 'Show only the selected pack' : 'View all packs'}
+            {showAllPacks ? "Show only the selected pack" : "View all packs"}
           </button>
         </div>
 
         {/* Quantity Selector */}
         <div className="mt-8 bg-white/60 border border-yellow-200/50 rounded-2xl p-6 text-left shadow-sm">
-          <label className="text-xs font-semibold text-gray-700">Quantity</label>
+          <label className="text-xs font-semibold text-gray-700">
+            Quantity
+          </label>
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-3">
               <button
@@ -185,7 +202,9 @@ function OrderContent() {
               >
                 <Minus size={16} />
               </button>
-              <span className="w-10 text-center font-bold text-lg">{quantity}</span>
+              <span className="w-10 text-center font-bold text-lg">
+                {quantity}
+              </span>
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
@@ -196,7 +215,8 @@ function OrderContent() {
               </button>
             </div>
             <p className="text-xs text-gray-500">
-              Pack{quantity > 1 ? 's' : ''}: {quantity} × {selectedProductData?.price || '₦0'}
+              Pack{quantity > 1 ? "s" : ""}: {quantity} ×{" "}
+              {selectedProductData?.price || "₦0"}
             </p>
           </div>
         </div>
@@ -209,8 +229,13 @@ function OrderContent() {
                 <Beef size={16} />
               </div>
               <div>
-                <h3 className="font-bold text-sm text-gray-900">Complementary Protein</h3>
-                <p className="text-xs text-gray-500">Included with this pack — the same choice applies to all protein packs.</p>
+                <h3 className="font-bold text-sm text-gray-900">
+                  Complementary Protein
+                </h3>
+                <p className="text-xs text-gray-500">
+                  Included with this pack — the same choice applies to all
+                  protein packs.
+                </p>
               </div>
             </div>
 
@@ -220,14 +245,14 @@ function OrderContent() {
                   key={option}
                   type="button"
                   onClick={() => setProtein(option)}
-                  className={`rounded-xl px-4 py-3 text-sm font-semibold border transition-all ${protein === option ? 'bg-[#801B1B] text-white border-[#801B1B]' : 'bg-white border-gray-300 text-gray-700 hover:border-[#801B1B]'}`}
+                  className={`rounded-xl px-4 py-3 text-sm font-semibold border transition-all ${protein === option ? "bg-[#801B1B] text-white border-[#801B1B]" : "bg-white border-gray-300 text-gray-700 hover:border-[#801B1B]"}`}
                 >
                   {option}
                 </button>
               ))}
             </div>
 
-            {protein === 'Other' && (
+            {protein === "Other" && (
               <input
                 type="text"
                 value={otherProtein}
@@ -247,7 +272,9 @@ function OrderContent() {
             </div>
             <div>
               <h2 className="font-bold text-lg md:text-xl">Payment Details</h2>
-              <p className="text-xs text-red-100">Make your transfer to the account below</p>
+              <p className="text-xs text-red-100">
+                Make your transfer to the account below
+              </p>
             </div>
           </div>
 
@@ -275,7 +302,9 @@ function OrderContent() {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-xs text-red-100">Account Number</p>
-                <p className="font-bold text-xl md:text-2xl tracking-widest">{ACCOUNT_NUMBER}</p>
+                <p className="font-bold text-xl md:text-2xl tracking-widest">
+                  {ACCOUNT_NUMBER}
+                </p>
               </div>
               <button
                 type="button"
@@ -283,7 +312,7 @@ function OrderContent() {
                 className="flex items-center space-x-1.5 bg-[#FAD02C] text-[#1E1E1E] px-4 py-2 rounded-full text-xs font-semibold hover:bg-[#e3b81f] transition-colors"
               >
                 {copied ? <Check size={14} /> : <Copy size={14} />}
-                <span>{copied ? 'Copied' : 'Copy'}</span>
+                <span>{copied ? "Copied" : "Copy"}</span>
               </button>
             </div>
           </div>
@@ -292,7 +321,9 @@ function OrderContent() {
         {/* Order Details */}
         <div className="mt-8 text-left space-y-4">
           <div>
-            <label className="text-xs font-semibold text-gray-700">Your Name</label>
+            <label className="text-xs font-semibold text-gray-700">
+              Your Name
+            </label>
             <input
               type="text"
               value={name}
@@ -302,7 +333,9 @@ function OrderContent() {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-700">Selected Pack</label>
+            <label className="text-xs font-semibold text-gray-700">
+              Selected Pack
+            </label>
             <input
               type="text"
               value={selectedProduct}
@@ -311,7 +344,9 @@ function OrderContent() {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-700">Delivery Address</label>
+            <label className="text-xs font-semibold text-gray-700">
+              Delivery Address
+            </label>
             <textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -321,7 +356,9 @@ function OrderContent() {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-700">Location (City / State)</label>
+            <label className="text-xs font-semibold text-gray-700">
+              Location (City / State)
+            </label>
             <input
               type="text"
               value={location}
@@ -344,7 +381,11 @@ function OrderContent() {
           {preview ? (
             <div className="space-y-4">
               <div className="relative inline-block">
-                <img src={preview} alt="Payment receipt preview" className="max-h-64 rounded-2xl shadow-md border border-gray-200" />
+                <img
+                  src={preview}
+                  alt="Payment receipt preview"
+                  className="max-h-64 rounded-2xl shadow-md border border-gray-200"
+                />
               </div>
               <button
                 type="button"
@@ -362,8 +403,12 @@ function OrderContent() {
               className="w-full border-2 border-dashed border-gray-300 rounded-2xl py-12 flex flex-col items-center justify-center space-y-3 text-gray-500 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors bg-white/40"
             >
               <Upload size={28} />
-              <p className="text-sm font-medium">Click to upload proof of payment</p>
-              <p className="text-xs">Upload a screenshot of your transfer receipt</p>
+              <p className="text-sm font-medium">
+                Click to upload proof of payment
+              </p>
+              <p className="text-xs">
+                Upload a screenshot of your transfer receipt
+              </p>
             </button>
           )}
         </div>
@@ -376,19 +421,22 @@ function OrderContent() {
           className="mt-8 w-full bg-[#801B1B] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#601414] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <MessageCircle size={18} />
-          <span>{uploading ? 'Uploading receipt...' : 'Send Proof of Payment via WhatsApp'}</span>
+          <span>
+            {uploading
+              ? "Uploading receipt..."
+              : "Send Proof of Payment via WhatsApp"}
+          </span>
         </button>
         <p className="text-[11px] text-gray-500 mt-3">
           {uploading
-            ? 'Uploading your receipt, please wait...'
+            ? "Uploading your receipt, please wait..."
             : file
-              ? 'Your receipt and order details will be sent to our WhatsApp for confirmation.'
-              : 'Upload your proof of payment above to enable sending.'}
+              ? "Your receipt and order details will be sent to our WhatsApp for confirmation."
+              : "Upload your proof of payment above to enable sending."}
         </p>
       </section>
 
       <Footer />
-
     </div>
   );
 }
