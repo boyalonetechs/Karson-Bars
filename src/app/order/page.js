@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, Suspense } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import {
   Banknote,
@@ -381,9 +382,12 @@ function OrderContent() {
           {preview ? (
             <div className="space-y-4">
               <div className="relative inline-block">
-                <img
+                <Image
                   src={preview}
                   alt="Payment receipt preview"
+                  width={512}
+                  height={256}
+                  unoptimized
                   className="max-h-64 rounded-2xl shadow-md border border-gray-200"
                 />
               </div>
