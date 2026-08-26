@@ -36,30 +36,30 @@ export default function LandingPage() {
   const products = [
     {
       id: 1,
-      name: "Gifta SOLO PACK",
-      sub: "For One Person",
-      desc: "A single pack of wholesome breadfruit bars, crafted for one person to enjoy anywhere.",
-      price: "₦1,500",
+      name: "Gifta Breadfruit Pack Standard",
+      protein: "Groundnut",
+      desc: "A wholesome pack of breadfruit bars with complementary groundnut protein.",
+      price: "₦2,500",
     },
     {
       id: 2,
-      name: "Gifta CLASSIC PACK",
-      sub: "For Two People",
-      desc: "Two packs of healthy breadfruit bars with complementary protein, ideal for a pair.",
+      name: "Gifta Breadfruit Pack Classic",
+      protein: "Chicken",
+      desc: "Nutritious breadfruit bars paired with complementary chicken protein.",
       price: "₦2,500",
     },
     {
       id: 3,
-      name: "Gifta PLUS PACK",
-      sub: "For Four People",
-      desc: "Four packs of nutritious breadfruit bars with complementary protein, perfect for the whole family.",
-      price: "₦10,000",
+      name: "Gifta Breadfruit Pack Plus",
+      protein: "Meat",
+      desc: "Hearty breadfruit bars with complementary meat protein for extra energy.",
+      price: "₦2,500",
     },
     {
       id: 4,
-      name: "Gifta PREMIUM PACK",
-      sub: "For Events (30+ People)",
-      desc: "A generous bulk pack of breadfruit bars with complementary protein, suited for events and gatherings of 30 people or more.",
+      name: "Gifta Breadfruit Pack Carton",
+      protein: "Assorted",
+      desc: "A generous bulk carton of breadfruit bars — ideal for events, families and distributors.",
       price: "₦40,000",
     },
   ];
@@ -237,8 +237,7 @@ export default function LandingPage() {
           Our Products
         </h2>
         <p className="text-xs md:text-sm text-gray-500 mb-12">
-          We have different packs for different people and for different
-          occasions
+          All packs are the same quality breadfruit bars — choose your preferred protein complement
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -260,7 +259,7 @@ export default function LandingPage() {
                 <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
                   {product.name}
                 </h3>
-                <p className="text-xs text-gray-500">{product.sub}</p>
+                <p className="text-xs text-gray-500">{product.protein}</p>
                 <p className="text-xs text-gray-600 leading-relaxed pt-1 flex-1">
                   {product.desc}
                 </p>
