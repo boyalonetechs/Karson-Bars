@@ -14,6 +14,8 @@ import {
   Plus,
   Truck,
   Store,
+  CreditCard,
+  ChevronDown,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -67,6 +69,22 @@ const products = [
 const formatNaira = (value) =>
   "₦" + value.toLocaleString("en-NG");
 
+const locationOptions = [
+  { value: "", label: "Select your location" },
+  { value: "Umuahia, Abia State", label: "Umuahia, Abia State", freeDelivery: true },
+  { value: "Aba, Abia State", label: "Aba, Abia State" },
+  { value: "Abuja, FCT", label: "Abuja, FCT" },
+  { value: "Lagos, Lagos State", label: "Lagos, Lagos State" },
+  { value: "Port Harcourt, Rivers State", label: "Port Harcourt, Rivers State" },
+  { value: "Abeokuta, Ogun State", label: "Abeokuta, Ogun State" },
+  { value: "Benin City, Edo State", label: "Benin City, Edo State" },
+  { value: "Enugu, Enugu State", label: "Enugu, Enugu State" },
+  { value: "Ibadan, Oyo State", label: "Ibadan, Oyo State" },
+  { value: "Owerri, Imo State", label: "Owerri, Imo State" },
+  { value: "Calabar, Cross River State", label: "Calabar, Cross River State" },
+  { value: "Other", label: "Other (specify below)" },
+];
+
 function OrderContent() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
@@ -81,6 +99,8 @@ function OrderContent() {
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [orderType, setOrderType] = useState("delivery");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [customLocation, setCustomLocation] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -98,9 +118,10 @@ function OrderContent() {
     }
   }, []);
 
+  const effectiveLocation = location === "Other" ? customLocation : location;
   const isUmuahia =
-    location.toLowerCase().includes("umuahia") ||
-    location.toLowerCase().includes("abia");
+    effectiveLocation.toLowerCase().includes("umuahia") ||
+    effectiveLocation.toLowerCase().includes("abia");
   const deliveryFee = orderType === "delivery" && isUmuahia ? 0 : orderType === "delivery" ? 1000 : 0;
   const totalPrice = selectedProduct.rawPrice * quantity + deliveryFee;
 
@@ -127,7 +148,7 @@ function OrderContent() {
 
     const deliveryText =
       orderType === "delivery"
-        ? `\nOrder Type: Delivery\nDelivery Address: ${address || "N/A"}\nLocation: ${location || "N/A"}\nDelivery Fee: ${deliveryFee === 0 ? "Free (Inside Umuahia)" : formatNaira(deliveryFee)}`
+        ? `\nOrder Type: Delivery\nDelivery Address: ${address || "N/A"}\nLocation: ${effectiveLocation || "N/A"}\nDelivery Fee: ${deliveryFee === 0 ? "Free (Inside Umuahia)" : formatNaira(deliveryFee)}`
         : "\nOrder Type: Pickup";
 
     let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name} (${selectedProduct.protein})\nQuantity: ${quantity}\nUnit Price: ${selectedProduct.price}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
@@ -161,7 +182,7 @@ function OrderContent() {
     }
 
     window.location.href = buildWhatsAppLink(text);
-  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, location, deliveryFee, totalPrice]);
+  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, totalPrice]);
 
   const handlePayAndSend = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -178,8 +199,12 @@ function OrderContent() {
       setFormError("Please enter your delivery address.");
       return;
     }
-    if (orderType === "delivery" && !location.trim()) {
-      setFormError("Please enter your location.");
+    if (orderType === "delivery" && !location) {
+      setFormError("Please select your location.");
+      return;
+    }
+    if (orderType === "delivery" && location === "Other" && !customLocation.trim()) {
+      setFormError("Please specify your location.");
       return;
     }
     setFormError("");
@@ -216,7 +241,7 @@ function OrderContent() {
       onClose: function () {},
     });
     handler.openIframe();
-    }, [name, phone, selectedProduct, totalPrice, handleSend, orderType, address, location]);
+    }, [name, phone, selectedProduct, totalPrice, handleSend, orderType, address, location, customLocation]);
 
   return (
     <div className="min-h-screen bg-[#FFFDF0] text-[#1E1E1E] font-sans overflow-x-clip">
@@ -227,8 +252,8 @@ function OrderContent() {
           Place Your Order
         </h1>
         <p className="text-xs md:text-sm text-gray-500 max-w-md mx-auto">
-          Choose your pack, make payment securely via Paystack, and we&apos;ll
-          confirm your order on WhatsApp.
+          Choose your pack, select a payment method, and we&apos;ll confirm your
+          order on WhatsApp.
         </p>
 
         {/* Product Selector */}
@@ -343,7 +368,7 @@ function OrderContent() {
               Delivery inside Umuahia is FREE!
             </p>
           )}
-          {orderType === "delivery" && !isUmuahia && location && (
+          {orderType === "delivery" && !isUmuahia && effectiveLocation && (
             <p className="mt-3 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 font-medium">
               Delivery fee: {formatNaira(deliveryFee)}
             </p>
@@ -403,16 +428,37 @@ function OrderContent() {
               </div>
               <div>
                 <label className="text-xs font-semibold text-gray-700">
-                  Location (City / State)
+                  Location
                 </label>
-                <input
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="e.g. Umuahia, Abia State"
-                  className="mt-1 w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
-                />
+                <div className="relative mt-1">
+                  <select
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="w-full appearance-none bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40 pr-10"
+                  >
+                    {locationOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}{opt.freeDelivery ? " (Free Delivery)" : ""}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
               </div>
+              {location === "Other" && (
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">
+                    Specify Your Location
+                  </label>
+                  <input
+                    type="text"
+                    value={customLocation}
+                    onChange={(e) => setCustomLocation(e.target.value)}
+                    placeholder="e.g. Ogoja, Cross River State"
+                    className="mt-1 w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
+                  />
+                </div>
+              )}
             </>
           )}
         </div>
@@ -456,152 +502,216 @@ function OrderContent() {
           </div>
         </div>
 
-        {/* Paystack Payment Button */}
-        <div className="mt-8">
-          {formError && (
-            <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2 mb-3 font-medium">
-              {formError}
-            </p>
-          )}
-          <button
-            type="button"
-            onClick={handlePayAndSend}
-            disabled={!name || !phone || uploading || paymentVerified}
-            className="w-full bg-[#1E1E1E] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#333] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            <Banknote size={18} />
-            <span>
-              {paymentVerified
-                ? "Payment Verified — Sending Order..."
-                : `Pay ${formatNaira(totalPrice)} with Paystack`}
-            </span>
-          </button>
-          <p className="text-[11px] text-gray-500 mt-3">
-            Secure payment powered by Paystack. After payment, your order will be sent to us on WhatsApp.
-          </p>
-        </div>
-
-        {/* Bank Transfer Alternative */}
-        <div className="mt-10 bg-[#801B1B] text-white rounded-3xl p-8 text-left shadow-lg">
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-[#FAD02C] p-3 rounded-full text-[#1E1E1E]">
-              <Banknote size={20} />
-            </div>
-            <div>
-              <h2 className="font-bold text-lg md:text-xl">Bank Transfer</h2>
-              <p className="text-xs text-red-100">
-                Or pay directly to the account below
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-4 text-sm">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs text-red-100">Account Name</p>
-                <p className="font-bold">{ACCOUNT_NAME}</p>
+        {/* Payment Method Selector */}
+        <div className="mt-8 text-left">
+          <label className="text-xs font-semibold text-gray-700 mb-3 block">
+            How would you like to pay?
+          </label>
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              type="button"
+              onClick={() => setPaymentMethod("paystack")}
+              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all flex items-center space-x-3 ${paymentMethod === "paystack" ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
+            >
+              <div className={`p-2.5 rounded-full ${paymentMethod === "paystack" ? "bg-[#801B1B] text-white" : "bg-gray-100 text-gray-600"}`}>
+                <CreditCard size={18} />
               </div>
-              <div className="hidden sm:block bg-[#FAD02C] p-2.5 rounded-full text-[#1E1E1E]">
+              <div>
+                <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
+                  Paystack
+                </h3>
+                <p className="text-xs text-gray-500">Card / Bank / USSD</p>
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentMethod("bank")}
+              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all flex items-center space-x-3 ${paymentMethod === "bank" ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
+            >
+              <div className={`p-2.5 rounded-full ${paymentMethod === "bank" ? "bg-[#801B1B] text-white" : "bg-gray-100 text-gray-600"}`}>
                 <Landmark size={18} />
               </div>
-            </div>
-
-            <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs text-red-100">Bank</p>
-                <p className="font-bold">{BANK_NAME}</p>
+                <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
+                  Bank Transfer
+                </h3>
+                <p className="text-xs text-gray-500">Pay & upload receipt</p>
               </div>
-              <div className="hidden sm:block bg-[#FAD02C] p-2.5 rounded-full text-[#1E1E1E]">
-                <Smartphone size={18} />
-              </div>
-            </div>
+            </button>
+          </div>
+        </div>
 
-            <div className="flex items-center justify-between gap-4">
+        {/* Paystack Payment */}
+        {paymentMethod === "paystack" && (
+          <div className="mt-8">
+            {formError && (
+              <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2 mb-3 font-medium">
+                {formError}
+              </p>
+            )}
+            <button
+              type="button"
+              onClick={handlePayAndSend}
+              disabled={!name || !phone || uploading || paymentVerified}
+              className="w-full bg-[#1E1E1E] text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#333] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              <Banknote size={18} />
+              <span>
+                {paymentVerified
+                  ? "Payment Verified — Sending Order..."
+                  : `Pay ${formatNaira(totalPrice)} with Paystack`}
+              </span>
+            </button>
+            <p className="text-[11px] text-gray-500 mt-3">
+              Secure payment powered by Paystack. After payment, your order will be sent to us on WhatsApp.
+            </p>
+          </div>
+        )}
+
+        {/* Bank Transfer Payment */}
+        {paymentMethod === "bank" && (
+          <div className="mt-10 bg-[#801B1B] text-white rounded-3xl p-8 text-left shadow-lg">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="bg-[#FAD02C] p-3 rounded-full text-[#1E1E1E]">
+                <Banknote size={20} />
+              </div>
               <div>
-                <p className="text-xs text-red-100">Account Number</p>
-                <p className="font-bold text-xl md:text-2xl tracking-widest">
-                  {ACCOUNT_NUMBER}
+                <h2 className="font-bold text-lg md:text-xl">Bank Transfer</h2>
+                <p className="text-xs text-red-100">
+                  Make your transfer to the account below
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="flex items-center space-x-1.5 bg-[#FAD02C] text-[#1E1E1E] px-4 py-2 rounded-full text-xs font-semibold hover:bg-[#e3b81f] transition-colors"
-              >
-                {copied ? <Check size={14} /> : <Copy size={14} />}
-                <span>{copied ? "Copied" : "Copy"}</span>
-              </button>
             </div>
-          </div>
 
-          {/* Receipt Upload for Bank Transfer */}
-          <div className="mt-6 pt-6 border-t border-white/20">
-            <p className="text-xs text-red-100 mb-3">
-              Upload your proof of payment (bank transfer receipt)
-            </p>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-            {preview ? (
-              <div className="space-y-3">
-                <div className="relative inline-block">
-                  <Image
-                    src={preview}
-                    alt="Payment receipt preview"
-                    width={512}
-                    height={256}
-                    unoptimized
-                    className="max-h-48 rounded-xl border border-white/20"
-                  />
+            <div className="space-y-4 text-sm">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs text-red-100">Account Name</p>
+                  <p className="font-bold">{ACCOUNT_NAME}</p>
+                </div>
+                <div className="hidden sm:block bg-[#FAD02C] p-2.5 rounded-full text-[#1E1E1E]">
+                  <Landmark size={18} />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs text-red-100">Bank</p>
+                  <p className="font-bold">{BANK_NAME}</p>
+                </div>
+                <div className="hidden sm:block bg-[#FAD02C] p-2.5 rounded-full text-[#1E1E1E]">
+                  <Smartphone size={18} />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs text-red-100">Account Number</p>
+                  <p className="font-bold text-xl md:text-2xl tracking-widest">
+                    {ACCOUNT_NUMBER}
+                  </p>
                 </div>
                 <button
                   type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center space-x-2 bg-[#FAD02C] text-[#1E1E1E] px-5 py-2 rounded-lg text-xs font-semibold hover:bg-[#e3b81f] transition-colors"
+                  onClick={handleCopy}
+                  className="flex items-center space-x-1.5 bg-[#FAD02C] text-[#1E1E1E] px-4 py-2 rounded-full text-xs font-semibold hover:bg-[#e3b81f] transition-colors"
                 >
-                  <Upload size={14} />
-                  <span>Change Receipt</span>
+                  {copied ? <Check size={14} /> : <Copy size={14} />}
+                  <span>{copied ? "Copied" : "Copy"}</span>
                 </button>
               </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full border-2 border-dashed border-white/30 rounded-xl py-8 flex flex-col items-center justify-center space-y-2 text-white/70 hover:border-[#FAD02C] hover:text-[#FAD02C] transition-colors"
-              >
-                <Upload size={24} />
-                <p className="text-xs font-medium">
-                  Click to upload proof of payment
-                </p>
-              </button>
-            )}
-          </div>
+            </div>
 
-          <button
-            type="button"
-            onClick={() => handleSend()}
-            disabled={uploading || !file}
-            className="mt-6 w-full bg-[#FAD02C] text-[#1E1E1E] px-8 py-3 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#e3b81f] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            <MessageCircle size={18} />
-            <span>
+            {/* Receipt Upload */}
+            <div className="mt-6 pt-6 border-t border-white/20">
+              <p className="text-xs text-red-100 mb-3">
+                Upload your proof of payment (bank transfer receipt)
+              </p>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              {preview ? (
+                <div className="space-y-3">
+                  <div className="relative inline-block">
+                    <Image
+                      src={preview}
+                      alt="Payment receipt preview"
+                      width={512}
+                      height={256}
+                      unoptimized
+                      className="max-h-48 rounded-xl border border-white/20"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center space-x-2 bg-[#FAD02C] text-[#1E1E1E] px-5 py-2 rounded-lg text-xs font-semibold hover:bg-[#e3b81f] transition-colors"
+                  >
+                    <Upload size={14} />
+                    <span>Change Receipt</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full border-2 border-dashed border-white/30 rounded-xl py-8 flex flex-col items-center justify-center space-y-2 text-white/70 hover:border-[#FAD02C] hover:text-[#FAD02C] transition-colors"
+                >
+                  <Upload size={24} />
+                  <p className="text-xs font-medium">
+                    Click to upload proof of payment
+                  </p>
+                </button>
+              )}
+            </div>
+
+            {formError && (
+              <p className="text-xs text-red-200 bg-red-900/40 border border-red-400/30 rounded-lg px-4 py-2 mt-4 font-medium">
+                {formError}
+              </p>
+            )}
+
+            <button
+              type="button"
+              onClick={() => {
+                if (!name.trim()) { setFormError("Please enter your name."); return; }
+                if (!phone.trim()) { setFormError("Please enter your phone number."); return; }
+                if (orderType === "delivery" && !address.trim()) { setFormError("Please enter your delivery address."); return; }
+                if (orderType === "delivery" && !location) { setFormError("Please select your location."); return; }
+                if (orderType === "delivery" && location === "Other" && !customLocation.trim()) { setFormError("Please specify your location."); return; }
+                if (!file) { setFormError("Please upload your proof of payment."); return; }
+                setFormError("");
+                handleSend();
+              }}
+              disabled={uploading || !file}
+              className="mt-6 w-full bg-[#FAD02C] text-[#1E1E1E] px-8 py-3 rounded-xl text-sm font-bold flex items-center justify-center space-x-2 hover:bg-[#e3b81f] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              <MessageCircle size={18} />
+              <span>
+                {uploading
+                  ? "Uploading receipt..."
+                  : "Send Proof of Payment via WhatsApp"}
+              </span>
+            </button>
+            <p className="text-[11px] text-red-100 mt-3">
               {uploading
-                ? "Uploading receipt..."
-                : "Send Proof of Payment via WhatsApp"}
-            </span>
-          </button>
-          <p className="text-[11px] text-red-100 mt-3">
-            {uploading
-              ? "Uploading your receipt, please wait..."
-              : file
-                ? "Your receipt and order details will be sent to our WhatsApp for confirmation."
-                : "Upload your proof of payment above to enable sending."}
+                ? "Uploading your receipt, please wait..."
+                : file
+                  ? "Your receipt and order details will be sent to our WhatsApp for confirmation."
+                  : "Upload your proof of payment above to enable sending."}
+            </p>
+          </div>
+        )}
+
+        {!paymentMethod && (
+          <p className="mt-6 text-xs text-gray-400 italic">
+            Please select a payment method above to continue.
           </p>
-        </div>
+        )}
       </section>
 
       <Footer />
