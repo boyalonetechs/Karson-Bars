@@ -36,24 +36,24 @@ export default function LandingPage() {
   const products = [
     {
       id: 1,
-      name: "Gifta Breadfruit Pack Standard",
+      name: "Gifta Breadfruit Groundnut",
       protein: "Groundnut",
       desc: "A wholesome pack of breadfruit bars with complementary groundnut protein.",
-      price: "₦2,500",
+      price: "₦1,500",
     },
     {
       id: 2,
-      name: "Gifta Breadfruit Pack Classic",
+      name: "Gifta Breadfruit Chicken",
       protein: "Chicken",
       desc: "Nutritious breadfruit bars paired with complementary chicken protein.",
-      price: "₦2,500",
+      price: "₦1,500",
     },
     {
       id: 3,
-      name: "Gifta Breadfruit Pack Plus",
+      name: "Gifta Breadfruit Meat",
       protein: "Meat",
       desc: "Hearty breadfruit bars with complementary meat protein for extra energy.",
-      price: "₦2,500",
+      price: "₦1,500",
     },
     {
       id: 4,
