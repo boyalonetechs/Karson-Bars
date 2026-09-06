@@ -60,7 +60,7 @@ export default function LandingPage() {
       name: "Gifta Breadfruit Pack Carton",
       protein: "Assorted",
       desc: "A generous bulk carton of breadfruit bars — ideal for events, families and distributors.",
-      price: "₦40,000",
+      price: "₦1,500",
     },
   ];
 

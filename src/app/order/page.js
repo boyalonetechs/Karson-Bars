@@ -60,8 +60,8 @@ const products = [
     name: "Gifta Breadfruit Pack Carton",
     protein: "Assorted",
     desc: "A generous bulk carton of breadfruit bars — ideal for events, families and distributors.",
-    price: "₦40,000",
-    rawPrice: 40000,
+    price: "₦1,500",
+    rawPrice: 1500,
     image: "/bar4.png",
   },
 ];
