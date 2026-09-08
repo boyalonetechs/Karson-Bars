@@ -97,18 +97,20 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF0] text-[#1E1E1E] font-sans overflow-x-clip">
-      <Header />
-      {/* --- HERO SECTION --- */}
-      <section
-        id="home"
-        className="relative max-w-7xl mx-auto px-6 py-12 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center overflow-hidden"
-      >
+      {/* --- HEADER + HERO WRAPPER --- */}
+      <div className="relative">
         <Image
           src="/overlay.jpg"
           alt=""
           fill
-          className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none z-0"
+          className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none z-0"
         />
+        <Header />
+        {/* --- HERO SECTION --- */}
+        <section
+          id="home"
+          className="relative max-w-7xl mx-auto px-6 py-12 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center overflow-hidden"
+        >
         <div className="relative z-10 space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#1E1E1E]">
             Order Your Healthy <br className="hidden sm:block" />
@@ -178,6 +180,7 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+      </div>
 
       {/* --- WHY ORDER FROM US SECTION --- */}
       <section id="about" className="bg-[#801B1B] text-white py-16 px-6">
