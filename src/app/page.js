@@ -36,28 +36,28 @@ export default function LandingPage() {
   const products = [
     {
       id: 1,
-      name: "Gifta Breadfruit Groundnut",
+      name: "Gifta Breadfruit ",
       protein: "Groundnut",
       desc: "A wholesome pack of breadfruit bars with complementary groundnut protein.",
       price: "₦1,500",
     },
     {
       id: 2,
-      name: "Gifta Breadfruit Chicken",
+      name: "Gifta Breadfruit ",
       protein: "Chicken",
       desc: "Nutritious breadfruit bars paired with complementary chicken protein.",
       price: "₦1,500",
     },
     {
       id: 3,
-      name: "Gifta Breadfruit Meat",
+      name: "Gifta Breadfruit ",
       protein: "Meat",
       desc: "Hearty breadfruit bars with complementary meat protein for extra energy.",
       price: "₦1,500",
     },
     {
       id: 4,
-      name: "Gifta Breadfruit Pack Carton",
+      name: "Gifta Breadfruit ",
       protein: "Assorted",
       desc: "A generous bulk carton of breadfruit bars — ideal for events, families and distributors.",
       price: "₦1,500",
@@ -251,7 +251,7 @@ export default function LandingPage() {
             >
               <div className="w-full h-40 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
                 <Image
-                  src={`/bar${product.id}.png`}
+                  src={`/bar1.png`}
                   alt={product.name}
                   width={400}
                   height={400}
