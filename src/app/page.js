@@ -40,28 +40,7 @@ export default function LandingPage() {
       protein: "Groundnut",
       desc: "A wholesome pack of breadfruit bars with complementary groundnut protein.",
       price: "₦1,500",
-    },
-    {
-      id: 2,
-      name: "Gifta Breadfruit ",
-      protein: "Chicken",
-      desc: "Nutritious breadfruit bars paired with complementary chicken protein.",
-      price: "₦1,500",
-    },
-    {
-      id: 3,
-      name: "Gifta Breadfruit ",
-      protein: "Meat",
-      desc: "Hearty breadfruit bars with complementary meat protein for extra energy.",
-      price: "₦1,500",
-    },
-    {
-      id: 4,
-      name: "Gifta Breadfruit ",
-      protein: "Assorted",
-      desc: "A generous bulk carton of breadfruit bars — ideal for events, families and distributors.",
-      price: "₦1,500",
-    },
+    }
   ];
 
   // Sample Reviews Data
@@ -262,7 +241,7 @@ export default function LandingPage() {
                 <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
                   {product.name}
                 </h3>
-                <p className="text-xs text-gray-500">{product.protein}</p>
+                <p className="text-xs text-gray-500 hidden">{product.protein}</p>
                 <p className="text-xs text-gray-600 leading-relaxed pt-1 flex-1">
                   {product.desc}
                 </p>
