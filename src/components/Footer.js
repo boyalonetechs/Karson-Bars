@@ -76,7 +76,7 @@ export default function Footer() {
           height={50}
           className="rounded-full scale-300 object-cover"
         />
-        <h1 className="font-poppins  text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#801B1B]">
+        <h1 className="font-display italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#801B1B]">
           Gifta Breadfruit Bars
         </h1>
       </div>
