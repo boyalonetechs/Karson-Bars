@@ -50,7 +50,7 @@ export default function LandingPage() {
         "Finding snacks that my children actually enjoy can sometimes be difficult. They loved the taste, and I love that I'm giving them something made from healthy natural ingredients.",
       author: "Blessing A.",
       avatar:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150",
+        "https://images.unsplash.com/photo-1507152832244-10d45c7eda57?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       id: 3,
@@ -59,7 +59,7 @@ export default function LandingPage() {
         "I usually need something quick between meals or while I'm working. Gifta Breadfruit Bars are convenient, satisfying and easy to carry around.",
       author: "Daniel E.",
       avatar:
-        "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=150",
+        "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
 
@@ -87,8 +87,8 @@ export default function LandingPage() {
               Good For Every Moment
             </p>
             <p className="text-gray-600 text-sm md:text-base max-w-md">
-              A delicious and wholesome food snack for kids, adults and the whole
-              family. Made for every moment. Enjoyed by everyone.
+              A delicious and wholesome food snack for kids, adults and the
+              whole family. Made for every moment. Enjoyed by everyone.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
@@ -228,8 +228,8 @@ export default function LandingPage() {
               A delicious, wholesome food snack for any moment.
             </p>
             <p className="text-xs text-gray-600 leading-relaxed flex-1">
-              Perfect for everyday enjoyment and life on the go. No preservatives
-              added. Best enjoyed fresh.
+              Perfect for everyday enjoyment and life on the go. No
+              preservatives added. Best enjoyed fresh.
             </p>
             <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
               <span className="font-bold text-lg text-gray-900">₦1,500</span>
@@ -249,7 +249,7 @@ export default function LandingPage() {
             </span>
             <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white/10">
               <Image
-                src="/bar1.png"
+                src="/bar4.png"
                 alt="Gifta Breadfruit Bar — 10-Pack Bundle"
                 width={400}
                 height={400}
@@ -257,10 +257,10 @@ export default function LandingPage() {
               />
             </div>
             <h3 className="font-bold text-base tracking-wide">
-              More to Enjoy. More Value.
+             Bundle Pack - More to Enjoy. More Value.
             </h3>
             <p className="text-xs text-red-100 leading-relaxed mt-1">
-              Get 10 Gifta Breadfruit Bars at a special bundle price — perfect
+              Get 10 Gifta Breadfruit Bars at a special bundle price, perfect
               for sharing, stocking up and enjoying more of what you love.
             </p>
             <ul className="flex flex-wrap gap-2 mt-3">
@@ -348,7 +348,9 @@ export default function LandingPage() {
                       <h4 className="font-bold text-xs text-gray-900">
                         {rev.author}
                       </h4>
-                      <p className="text-[10px] text-gray-500">Verified Buyer</p>
+                      <p className="text-[10px] text-gray-500">
+                        Verified Buyer
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -369,10 +371,10 @@ export default function LandingPage() {
         className="max-w-7xl mx-auto px-6 py-20 text-center"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">
-          Be A Distributor
+          Contact Us
         </h2>
         <p className="text-xs md:text-sm text-gray-600 mb-8 max-w-sm mx-auto">
-          Become a distributor of Gifta Breadfruit Bars by filling the form
+          Contact Gifta Breadfruit Bars by filling the form
           below — we will reach out to you on WhatsApp.
         </p>
 
