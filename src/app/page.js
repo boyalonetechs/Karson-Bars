@@ -32,45 +32,34 @@ export default function LandingPage() {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
-  // Product Data
-  const products = [
-    {
-      id: 1,
-      name: "Gifta Breadfruit ",
-      protein: "Groundnut",
-      desc: "A wholesome pack of breadfruit bars with complementary groundnut protein.",
-      price: "₦1,500",
-    }
-  ];
-
   // Sample Reviews Data
   const reviews = [
     {
       id: 1,
+      title: "Surprisingly Delicious!",
       quote:
-        "The family pack is so good to taste and nutritious and nice to the mouth.",
-      author: "Bessie Cooper",
-      role: "Trade Agent",
+        "I honestly didn't know what to expect when I first tried the Breadfruit Bar, but I really enjoyed it. It's tasty, filling and feels like a better snack option for me and my family.",
+      author: "Chioma O.",
       avatar:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
+        "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=150",
     },
     {
       id: 2,
+      title: "My Kids Love It",
       quote:
-        "The family pack is so good to taste and nutritious and nice to the mouth.",
-      author: "Ronald Richards",
-      role: "Trade Agent",
+        "Finding snacks that my children actually enjoy can sometimes be difficult. They loved the taste, and I love that I'm giving them something made from healthy natural ingredients.",
+      author: "Blessing A.",
       avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150",
     },
     {
       id: 3,
+      title: "Perfect for Busy Days",
       quote:
-        "The family pack is so good to taste and nutritious and nice to the mouth.",
-      author: "Ralph Edwards",
-      role: "Trade Agent",
+        "I usually need something quick between meals or while I'm working. Gifta Breadfruit Bars are convenient, satisfying and easy to carry around.",
+      author: "Daniel E.",
       avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
+        "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=150",
     },
   ];
 
@@ -90,85 +79,86 @@ export default function LandingPage() {
           id="home"
           className="relative max-w-7xl mx-auto px-6 py-12 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center overflow-hidden"
         >
-        <div className="relative z-10 space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#1E1E1E]">
-            Order Your Healthy <br className="hidden sm:block" />
-            Food Snacks
-          </h1>
-          <p className="text-gray-600 text-sm md:text-base max-w-md">
-            We make healthy Food Snacks for kids, adults, whole families and events.
-          </p>
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Link
-              href="/order?product=1"
-              className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm"
-            >
-              <span>Order Now</span>
-              <div className="w-5 h-5 rounded-full border border-white/40 flex items-center justify-center text-xs">
-                ➔
-              </div>
-            </Link>
-            <Link
-              href="/about"
-              className="border border-[#801B1B] text-[#801B1B] px-6 py-3 rounded-md text-sm font-medium hover:bg-[#801B1B]/5 transition-colors"
-            >
-              Learn More
-            </Link>
+          <div className="relative z-10 space-y-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#1E1E1E]">
+              Order Your Healthy Food Snack
+            </h1>
+            <p className="text-gray-700 text-base md:text-lg font-medium">
+              Good For Every Moment
+            </p>
+            <p className="text-gray-600 text-sm md:text-base max-w-md">
+              A delicious and wholesome food snack for kids, adults and the whole
+              family. Made for every moment. Enjoyed by everyone.
+            </p>
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                href="/order?product=1"
+                className="bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium flex items-center space-x-2 hover:bg-[#601414] transition-colors shadow-sm"
+              >
+                <span>Order Now</span>
+                <div className="w-5 h-5 rounded-full border border-white/40 flex items-center justify-center text-xs">
+                  ➔
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Hero Image Slider */}
-        {heroImages.map((src, idx) => (
-          <Image
-            key={src}
-            src={src}
-            alt={`Gifta Breadfruit Bars hero ${idx + 1}`}
-            width={900}
-            height={900}
-            className={`relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 w-full aspect-square object-cover transition-all duration-500 ease-in-out ${idx === slideIndex ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
-          />
-        ))}
-
-        {/* Prev Button */}
-        <button
-          onClick={prevSlide}
-          aria-label="Previous image"
-          className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-start self-center ml-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
-        >
-          <ChevronLeft size={18} />
-        </button>
-
-        {/* Next Button */}
-        <button
-          onClick={nextSlide}
-          aria-label="Next image"
-          className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-end self-center mr-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
-        >
-          <ChevronRight size={18} />
-        </button>
-
-        {/* Dots Indicator */}
-        <div className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-center self-end mb-3 flex items-center gap-2">
-          {heroImages.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setSlideIndex(idx)}
-              aria-label={`Go to image ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${idx === slideIndex ? "w-6 bg-white" : "w-2 bg-white/60 hover:bg-white/90"}`}
+          {/* Hero Image Slider */}
+          {heroImages.map((src, idx) => (
+            <Image
+              key={src}
+              src={src}
+              alt={`Gifta Breadfruit Bars hero ${idx + 1}`}
+              width={900}
+              height={900}
+              className={`relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 w-full aspect-square object-cover transition-all duration-500 ease-in-out ${idx === slideIndex ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
             />
           ))}
-        </div>
-      </section>
+
+          {/* Prev Button */}
+          <button
+            onClick={prevSlide}
+            aria-label="Previous image"
+            className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-start self-center ml-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
+          >
+            <ChevronLeft size={18} />
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={nextSlide}
+            aria-label="Next image"
+            className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-end self-center mr-3 w-9 h-9 rounded-full bg-white/85 text-[#1E1E1E] flex items-center justify-center shadow-md hover:bg-white transition-colors"
+          >
+            <ChevronRight size={18} />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="relative z-10 row-start-2 md:row-start-1 col-start-1 md:col-start-2 justify-self-center self-end mb-3 flex items-center gap-2">
+            {heroImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSlideIndex(idx)}
+                aria-label={`Go to image ${idx + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${idx === slideIndex ? "w-6 bg-white" : "w-2 bg-white/60 hover:bg-white/90"}`}
+              />
+            ))}
+          </div>
+        </section>
       </div>
 
-      {/* --- WHY ORDER FROM US SECTION --- */}
+      {/* --- WHY GIFTA BREADFRUIT BARS SECTION --- */}
       <section id="about" className="bg-[#801B1B] text-white py-16 px-6">
         <div className="max-w-7xl mx-auto text-center space-y-3">
           <h2 className="text-2xl md:text-3xl font-bold">
-            Why Gifta Breadfruit Bars
+            Why Gifta Breadfruit Bars?
           </h2>
-          <p className="text-xs md:text-sm text-red-100 max-w-xl mx-auto">
-            A tasty, wholesome snack that nourishes your body — naturally.
+          <p className="text-sm md:text-base text-red-100 max-w-2xl mx-auto leading-relaxed">
+            Made with the wholesome goodness of breadfruit, Gifta Breadfruit
+            Bars are a delicious and satisfying food snack for every moment.
+          </p>
+          <p className="text-xs md:text-sm text-yellow-300 font-medium tracking-wide uppercase">
+            Delicious. Wholesome. Naturally satisfying.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 text-left">
@@ -213,52 +203,97 @@ export default function LandingPage() {
       {/* --- OUR PRODUCTS SECTION --- */}
       <section
         id="products"
-        className="max-w-7xl mx-auto px-6 py-20 text-center"
+        className="max-w-5xl mx-auto px-6 py-20 text-center"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2">
-          Our Products
+        <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-12">
+          Choose Your Gifta
         </h2>
-        <p className="text-xs md:text-sm text-gray-500 mb-12">
-          All packs are the same quality breadfruit bars — choose your preferred protein complement
-        </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white/60 rounded-2xl p-4 border border-yellow-200/50 flex flex-col justify-between text-left shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="w-full h-40 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                <Image
-                  src={`/bar1.png`}
-                  alt={product.name}
-                  width={400}
-                  height={400}
-                  className="w-full scale-120 h-full object-cover"
-                />
-              </div>
-              <div className="space-y-1 flex flex-col flex-1">
-                <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
-                  {product.name}
-                </h3>
-                <p className="text-xs text-gray-500 hidden">{product.protein}</p>
-                <p className="text-xs text-gray-600 leading-relaxed pt-1 flex-1">
-                  {product.desc}
-                </p>
-                <div className="flex items-center justify-between pt-3">
-                  <span className="font-bold text-sm text-gray-900">
-                    {product.price}
-                  </span>
-                  <Link
-                    href={`/order?product=${product.id}`}
-                    className="text-xs text-[#801B1B] font-medium hover:underline"
-                  >
-                    Place an Order
-                  </Link>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {/* Single Pack */}
+          <div className="bg-white/60 rounded-2xl p-6 border border-yellow-200/50 flex flex-col text-left shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center">
+              <Image
+                src="/bar1.png"
+                alt="Gifta Breadfruit Bar — Single Pack"
+                width={400}
+                height={400}
+                className="w-full h-full object-cover"
+              />
             </div>
-          ))}
+            <h3 className="font-bold text-base tracking-wide text-gray-900">
+              Single Pack
+            </h3>
+            <p className="text-xs text-gray-500 mb-1">
+              A delicious, wholesome food snack for any moment.
+            </p>
+            <p className="text-xs text-gray-600 leading-relaxed flex-1">
+              Perfect for everyday enjoyment and life on the go. No preservatives
+              added. Best enjoyed fresh.
+            </p>
+            <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
+              <span className="font-bold text-lg text-gray-900">₦1,500</span>
+              <Link
+                href="/order?product=1"
+                className="bg-[#801B1B] text-white px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-[#601414] transition-colors"
+              >
+                ORDER NOW
+              </Link>
+            </div>
+          </div>
+
+          {/* 10-Pack Bundle */}
+          <div className="relative bg-[#801B1B] text-white rounded-2xl p-6 flex flex-col text-left shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+            <span className="absolute top-4 right-4 bg-[#FAD02C] text-[#1E1E1E] text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase">
+              Best Value
+            </span>
+            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white/10">
+              <Image
+                src="/bar1.png"
+                alt="Gifta Breadfruit Bar — 10-Pack Bundle"
+                width={400}
+                height={400}
+                className="w-full h-full object-cover opacity-90"
+              />
+            </div>
+            <h3 className="font-bold text-base tracking-wide">
+              More to Enjoy. More Value.
+            </h3>
+            <p className="text-xs text-red-100 leading-relaxed mt-1">
+              Get 10 Gifta Breadfruit Bars at a special bundle price — perfect
+              for sharing, stocking up and enjoying more of what you love.
+            </p>
+            <ul className="flex flex-wrap gap-2 mt-3">
+              {["10 Bars", "Better Value", "Perfect for Sharing"].map((tag) => (
+                <li
+                  key={tag}
+                  className="flex items-center text-[11px] font-medium text-white gap-1 bg-white/10 rounded-full px-3 py-1"
+                >
+                  <span className="text-[#FAD02C]">✓</span>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+            <p className="text-[11px] text-red-100 mt-3">
+              No preservatives added. Best enjoyed fresh.
+            </p>
+            <div className="flex items-center justify-between pt-4 border-t border-white/15 mt-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-sm text-white/50 line-through">
+                  ₦15,000
+                </span>
+                <span className="font-bold text-lg text-[#FAD02C]">
+                  ₦13,000
+                </span>
+              </div>
+              <Link
+                href="/order?product=10"
+                className="bg-[#FAD02C] text-[#1E1E1E] px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-yellow-300 transition-colors"
+              >
+                GET THE 10-PACK
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -286,9 +321,15 @@ export default function LandingPage() {
                   className="bg-[#FFFDF0] text-[#1E1E1E] p-6 rounded-2xl text-left flex flex-col justify-between shadow-md"
                 >
                   <div>
-                    <div className="w-8 h-8 rounded-full bg-[#801B1B] text-white flex items-center justify-center font-serif text-lg leading-none mb-4">
+                    <div className="text-[#FAD02C] text-sm tracking-widest mb-3">
+                      ★★★★★
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-[#801B1B] text-white flex items-center justify-center font-serif text-lg leading-none mb-3">
                       “
                     </div>
+                    <h3 className="font-bold text-sm text-gray-900 mb-2">
+                      {rev.title}
+                    </h3>
                     <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-6">
                       {rev.quote}
                     </p>
@@ -307,7 +348,7 @@ export default function LandingPage() {
                       <h4 className="font-bold text-xs text-gray-900">
                         {rev.author}
                       </h4>
-                      <p className="text-[10px] text-gray-500">{rev.role}</p>
+                      <p className="text-[10px] text-gray-500">Verified Buyer</p>
                     </div>
                   </div>
                 </div>

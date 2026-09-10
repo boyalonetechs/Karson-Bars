@@ -64,6 +64,16 @@ const products = [
     rawPrice: 1500,
     image: "/bar4.png",
   },
+  {
+    id: 10,
+    name: "Gifta Breadfruit 10-Pack Bundle",
+    protein: "Bundle",
+    desc: "10 Gifta Breadfruit Bars at a special bundle price — perfect for sharing, stocking up and enjoying more of what you love.",
+    price: "₦13,000",
+    oldPrice: "₦15,000",
+    rawPrice: 13000,
+    image: "/bar1.png",
+  },
 ];
 
 const formatNaira = (value) =>
