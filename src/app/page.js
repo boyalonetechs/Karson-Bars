@@ -15,7 +15,7 @@ export default function LandingPage() {
   const [distributorMessage, setDistributorMessage] = useState("");
 
   // Hero Slider Images
-  const heroImages = ["/hero1.png", "/hero2.png", "/hero3.png", "/hero4.png"];
+  const heroImages = ["/hero1.png", "/hero3.jpg"];
 
   const prevSlide = useCallback(
     () => setSlideIndex((i) => (i === 0 ? heroImages.length - 1 : i - 1)),
