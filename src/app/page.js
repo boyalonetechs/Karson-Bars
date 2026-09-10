@@ -281,9 +281,10 @@ export default function LandingPage() {
                 </li>
               ))}
             </ul>
-            <p className="text-[11px] text-red-100 mt-3">
-              No preservatives added. Best enjoyed fresh.
-            </p>
+            <div className="inline-flex items-center gap-1.5 bg-white/10 text-white/80 text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-white/15 mt-3">
+              <Leaf size={10} className="text-green-300" />
+              <span>No preservatives added. Best enjoyed fresh.</span>
+            </div>
             <div className="flex items-center justify-between pt-4 border-t border-white/15 mt-4">
               <div className="flex items-baseline gap-2">
                 <span className="text-sm text-white/50 line-through">
