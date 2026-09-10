@@ -86,6 +86,10 @@ export default function LandingPage() {
             <p className="text-gray-700 text-base md:text-lg font-medium">
               Good For Every Moment
             </p>
+            <div className="inline-flex items-center gap-2 bg-[#FAD02C]/20 border border-[#FAD02C]/40 text-[#801B1B] text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
+              <Leaf size={13} className="text-green-700" />
+              <span>No preservatives added. Best enjoyed fresh.</span>
+            </div>
             <p className="text-gray-600 text-sm md:text-base max-w-md">
               A delicious and wholesome food snack for kids, adults and the
               whole family. Made for every moment. Enjoyed by everyone.
@@ -228,9 +232,12 @@ export default function LandingPage() {
               A delicious, wholesome food snack for any moment.
             </p>
             <p className="text-xs text-gray-600 leading-relaxed flex-1">
-              Perfect for everyday enjoyment and life on the go. No
-              preservatives added. Best enjoyed fresh.
+              Perfect for everyday enjoyment and life on the go.
             </p>
+            <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
+              <Leaf size={10} className="text-green-700" />
+              <span>No preservatives added. Best enjoyed fresh.</span>
+            </div>
             <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
               <span className="font-bold text-lg text-gray-900">₦1,500</span>
               <Link
