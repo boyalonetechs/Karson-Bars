@@ -72,6 +72,7 @@ const products = [
     price: "₦13,000",
     oldPrice: "₦15,000",
     rawPrice: 13000,
+    barsPerPack: 10,
     image: "/bar1.png",
   },
 ];
@@ -135,7 +136,10 @@ function OrderContent() {
     effectiveLocation.toLowerCase().includes("umuahia") ||
     effectiveLocation.toLowerCase().includes("abia");
   const deliveryFee = orderType === "delivery" && isUmuahia ? 0 : orderType === "delivery" ? 1000 : 0;
-  const totalPrice = selectedProduct.rawPrice * quantity + deliveryFee;
+  const perBarPrice = selectedProduct.barsPerPack
+    ? selectedProduct.rawPrice / selectedProduct.barsPerPack
+    : selectedProduct.rawPrice;
+  const totalPrice = perBarPrice * quantity + deliveryFee;
 
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
@@ -163,7 +167,7 @@ function OrderContent() {
         ? `\nOrder Type: Delivery\nDelivery Address: ${address || "N/A"}\nLocation: ${effectiveLocation || "N/A"}\nDelivery Fee: ${deliveryFee === 0 ? "Free (Inside Umuahia)" : formatNaira(deliveryFee)}`
         : "\nOrder Type: Pickup";
 
-    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name} (${selectedProduct.protein})\nQuantity: ${quantity}\nUnit Price: ${selectedProduct.price}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
+    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name} (${selectedProduct.protein})\nQuantity: ${quantity}\nUnit Price: ${formatNaira(perBarPrice)}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
 
     if (paymentNote) {
       text += `\n\n${paymentNote}`;
@@ -194,7 +198,7 @@ function OrderContent() {
     }
 
     window.location.href = buildWhatsAppLink(text);
-  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, totalPrice]);
+  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, perBarPrice, totalPrice]);
 
   const handlePayAndSend = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -333,7 +337,7 @@ function OrderContent() {
               </button>
             </div>
             <p className="text-xs text-gray-500">
-              {quantity} × {selectedProduct.price}
+              {quantity} × {formatNaira(perBarPrice)}
             </p>
           </div>
         </div>
@@ -489,7 +493,7 @@ function OrderContent() {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal</span>
-              <span className="font-medium">{formatNaira(selectedProduct.rawPrice * quantity)}</span>
+              <span className="font-medium">{formatNaira(perBarPrice * quantity)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Order Type</span>
