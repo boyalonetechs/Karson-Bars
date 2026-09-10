@@ -222,9 +222,9 @@ export default function LandingPage() {
               />
             </div>
             <h3 className="font-bold text-base tracking-wide text-gray-900">
-              Single Pack
+              Gifta Breadfruit Bar
             </h3>
-            <p className="text-xs text-gray-500 mb-1">
+            <p className="text-xs  text-gray-600 leading-relaxed mt-1">
               A delicious, wholesome food snack for any moment.
             </p>
             <p className="text-xs text-gray-600 leading-relaxed flex-1">
@@ -244,12 +244,12 @@ export default function LandingPage() {
 
           {/* 10-Pack Bundle */}
           <div className="relative bg-[#801B1B] text-white rounded-2xl p-6 flex flex-col text-left shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-            <span className="absolute top-4 right-4 bg-[#FAD02C] text-[#1E1E1E] text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase">
+            <span className="absolute top-4 right-4 bg-[#FAD02C] text-[#1E1E1E] text-[10px] font-bold tracking-wider px-3 py-2 z-50 rounded-full uppercase">
               Best Value
             </span>
-            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white/10">
+            <div className="w-full h-50 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white/10">
               <Image
-                src="/bar4.png"
+                src="/gifterbars.jpg"
                 alt="Gifta Breadfruit Bar — 10-Pack Bundle"
                 width={400}
                 height={400}
@@ -257,7 +257,7 @@ export default function LandingPage() {
               />
             </div>
             <h3 className="font-bold text-base tracking-wide">
-             Bundle Pack - More to Enjoy. More Value.
+              Bundle Pack - More to Enjoy at discount.
             </h3>
             <p className="text-xs text-red-100 leading-relaxed mt-1">
               Get 10 Gifta Breadfruit Bars at a special bundle price, perfect
@@ -287,7 +287,7 @@ export default function LandingPage() {
                 </span>
               </div>
               <Link
-                href="/order?product=10"
+                href="/order?product=10&quantity=10"
                 className="bg-[#FAD02C] text-[#1E1E1E] px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-yellow-300 transition-colors"
               >
                 GET THE 10-PACK
@@ -374,8 +374,8 @@ export default function LandingPage() {
           Contact Us
         </h2>
         <p className="text-xs md:text-sm text-gray-600 mb-8 max-w-sm mx-auto">
-          Contact Gifta Breadfruit Bars by filling the form
-          below — we will reach out to you on WhatsApp.
+          Contact Gifta Breadfruit Bars by filling the form below — we will
+          reach out to you on WhatsApp.
         </p>
 
         <form

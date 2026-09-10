@@ -98,14 +98,16 @@ const locationOptions = [
 function OrderContent() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
+  const quantityParam = searchParams.get("quantity");
   const initialProduct =
     products.find((p) => p.id === Number(productParam)) || products[0];
+  const initialQuantity = Number(quantityParam) > 0 ? Number(quantityParam) : 1;
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(initialProduct);
   const [showAllPacks, setShowAllPacks] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(initialQuantity);
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [orderType, setOrderType] = useState("delivery");
