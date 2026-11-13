@@ -88,7 +88,7 @@ export default function LandingPage() {
             </p>
             <div className="inline-flex items-center gap-2 bg-[#FAD02C]/20 border border-[#FAD02C]/40 text-[#801B1B] text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
               <Leaf size={13} className="text-green-700" />
-              <span>No preservatives added. Best enjoyed fresh.</span>
+              <span>All-Natural Plant Ingredients: No additives.</span>
             </div>
             <p className="text-gray-600 text-sm md:text-base max-w-md">
               A delicious and wholesome food snack for kids, adults and the
@@ -158,8 +158,9 @@ export default function LandingPage() {
             Why Gifta Breadfruit Bars?
           </h2>
           <p className="text-sm md:text-base text-red-100 max-w-2xl mx-auto leading-relaxed">
-            Made with the wholesome goodness of African breadfruit (Ukwa), Gifta Breadfruit
-            Bars are a delicious and satisfying food snack for every moment.
+            Made with the wholesome goodness of African breadfruit (Ukwa), Gifta
+            Breadfruit Bars are a delicious and satisfying food snack for every
+            moment.
           </p>
           <p className="text-xs md:text-sm text-yellow-300 font-medium tracking-wide uppercase">
             Delicious. Wholesome. Naturally satisfying.
@@ -176,8 +177,9 @@ export default function LandingPage() {
               />
             </div>
             <p className="text-xs text-red-100 mt-3">
-              Gifta Multi Services Ltd at the Umuahia Mega Exhibition — Christmas
-              Shopping Festival, Abia Mall Shoprite, 5th–7th December 2025.
+              Gifta Multi Services Ltd at the Umuahia Mega Exhibition —
+              Christmas Shopping Festival, Abia Mall Shoprite, 5th–7th December
+              2025.
             </p>
           </div>
 
@@ -248,11 +250,12 @@ export default function LandingPage() {
               A delicious, wholesome food snack for any moment.
             </p>
             <p className="text-xs text-gray-600 leading-relaxed flex-1">
-              All-Natural Plant Ingredients: No additives. Best enjoyed Fresh Bars.
+              All-Natural Plant Ingredients: No additives. Best enjoyed Fresh
+              Bars.
             </p>
             <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
               <Leaf size={10} className="text-green-700" />
-              <span>No preservatives added. Best enjoyed fresh.</span>
+              <span>All-Natural Plant Ingredients: No additives.</span>
             </div>
             <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
               <span className="font-bold text-lg text-gray-900">₦1,500</span>
@@ -283,22 +286,26 @@ export default function LandingPage() {
               Bundle Pack - More to Enjoy at discount.
             </h3>
             <p className="text-xs text-red-100 leading-relaxed mt-1">
-              Get 10 to 50 Companion packs of Gifta Breadfruit Bars at a special bundle price. Perfect for sharing, stocking up and enjoying more of what you love.
+              Get 10 to 50 Companion packs of Gifta Breadfruit Bars at a special
+              bundle price. Perfect for sharing, stocking up and enjoying more
+              of what you love.
             </p>
             <ul className="flex flex-wrap gap-2 mt-3">
-              {["10-50 Packs", "Better Value", "Perfect for Sharing"].map((tag) => (
-                <li
-                  key={tag}
-                  className="flex items-center text-[11px] font-medium text-white gap-1 bg-white/10 rounded-full px-3 py-1"
-                >
-                  <span className="text-[#FAD02C]">✓</span>
-                  {tag}
-                </li>
-              ))}
+              {["10-50 Packs", "Better Value", "Perfect for Sharing"].map(
+                (tag) => (
+                  <li
+                    key={tag}
+                    className="flex items-center text-[11px] font-medium text-white gap-1 bg-white/10 rounded-full px-3 py-1"
+                  >
+                    <span className="text-[#FAD02C]">✓</span>
+                    {tag}
+                  </li>
+                ),
+              )}
             </ul>
             <div className="inline-flex items-center gap-1.5 bg-white/10 text-white/80 text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-white/15 mt-3">
               <Leaf size={10} className="text-green-300" />
-              <span>No preservatives added. Best enjoyed fresh.</span>
+              <span>All-Natural Plant Ingredients: No additives.</span>
             </div>
             <div className="flex items-center justify-between pt-4 border-t border-white/15 mt-4">
               <div className="flex items-baseline gap-2">
@@ -341,7 +348,7 @@ export default function LandingPage() {
             </p>
             <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
               <Leaf size={10} className="text-green-700" />
-              <span>No preservatives added. Best enjoyed fresh.</span>
+              <span>All-Natural Plant Ingredients: No additives.</span>
             </div>
             <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
               <div className="flex items-baseline gap-2">
