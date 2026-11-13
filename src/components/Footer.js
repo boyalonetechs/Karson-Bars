@@ -58,12 +58,7 @@ export default function Footer() {
           >
             <MessageCircle size={14} />
           </a>
-          <a
-            href="#"
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-gray-500 transition-colors"
-          >
-            <Share2 size={14} />
-          </a>
+
         </div>
       </div>
 
