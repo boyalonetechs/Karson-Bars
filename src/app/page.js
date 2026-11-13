@@ -2,10 +2,165 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Heart, Leaf, Sparkles } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Leaf,
+  Sparkles,
+  BriefcaseBusiness,
+  Users,
+  Gift,
+  PartyPopper,
+  PencilRuler,
+} from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { buildWhatsAppLink } from "@/lib/constants";
+import { buildWhatsAppLink, formatNaira } from "@/lib/constants";
+import { PACKS, pricePerBar, savingOn } from "@/lib/packs";
+
+const PACK_ICONS = {
+  BriefcaseBusiness,
+  Users,
+  Gift,
+  PartyPopper,
+  PencilRuler,
+};
+
+function PackCard({ pack, spanClass = "" }) {
+  const featured = Boolean(pack.featured);
+  const Icon = PACK_ICONS[pack.icon];
+  const perBar = pricePerBar(pack);
+  const saving = savingOn(pack);
+
+  return (
+    <article
+      className={`relative flex flex-col overflow-hidden rounded-2xl border p-6 text-left shadow-sm transition-shadow hover:shadow-md ${spanClass} ${
+        featured
+          ? "border-transparent bg-[#801B1B] text-white"
+          : "border-yellow-200/50 bg-white/60 text-[#1E1E1E]"
+      }`}
+    >
+      {featured && (
+        <span className="absolute right-5 top-5 z-10 rounded-full bg-[#FAD02C] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#1E1E1E]">
+          Most popular
+        </span>
+      )}
+
+      <div className="mb-5 flex h-60 w-full items-center justify-center overflow-hidden rounded-xl bg-white">
+        {pack.isCustom ? (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2.5 border-2 border-dashed border-[#FAD02C] bg-[#FFFDF0]">
+            <PencilRuler size={26} className="text-[#801B1B]" />
+            <p className="text-[11px] font-semibold tracking-wide text-[#801B1B]">
+              Your logo here
+            </p>
+          </div>
+        ) : (
+          <Image
+            src={pack.image}
+            alt={`Gifta Breadfruit Bars — ${pack.name}`}
+            width={pack.imageWidth}
+            height={pack.imageHeight}
+            className={`h-full w-full ${
+              pack.fit === "cover" ? "object-cover" : "object-contain"
+            } ${pack.imagePosition || ""}`}
+          />
+        )}
+      </div>
+
+      <div className="flex items-center gap-2.5">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FAD02C] text-[#1E1E1E]">
+          <Icon size={14} aria-hidden="true" />
+        </span>
+        <h3
+          className={`font-bold text-base tracking-wide ${
+            featured ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {pack.name}
+        </h3>
+      </div>
+      <p
+        className={`mt-2 text-[11px] font-semibold uppercase tracking-wider ${
+          featured ? "text-[#FAD02C]" : "text-[#801B1B]"
+        }`}
+      >
+        {pack.audience}
+      </p>
+      <p
+        className={`mt-1 text-xs ${featured ? "text-red-100" : "text-gray-500"}`}
+      >
+        {pack.contents}
+      </p>
+      <p
+        className={`mt-2 flex-1 text-xs leading-relaxed ${
+          featured ? "text-red-100" : "text-gray-600"
+        }`}
+      >
+        {pack.description}
+      </p>
+
+      <div
+        className={`mt-5 flex items-end justify-between gap-3 border-t pt-4 ${
+          featured ? "border-white/15" : "border-yellow-200/50"
+        }`}
+      >
+        <div>
+          <div className="flex items-baseline gap-2">
+            {pack.oldPrice && (
+              <span
+                className={`text-sm line-through ${
+                  featured ? "text-white/50" : "text-gray-400"
+                }`}
+              >
+                {formatNaira(pack.oldPrice)}
+              </span>
+            )}
+            <span
+              className={`text-xl font-bold ${
+                featured ? "text-[#FAD02C]" : "text-[#801B1B]"
+              }`}
+            >
+              {pack.isCustom ? "Negotiated" : formatNaira(pack.price)}
+            </span>
+          </div>
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {saving > 0 && (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                  featured
+                    ? "bg-white/10 text-white/80"
+                    : "border border-[#801B1B]/10 bg-[#801B1B]/8 text-[#801B1B]"
+                }`}
+              >
+                Save {formatNaira(saving)}
+              </span>
+            )}
+            {perBar && (
+              <span
+                className={`text-[11px] ${
+                  featured ? "text-white/60" : "text-gray-500"
+                }`}
+              >
+                {formatNaira(Math.round(perBar))} a bar
+              </span>
+            )}
+          </div>
+        </div>
+        <Link
+          href={`/order?product=${pack.id}`}
+          className={`shrink-0 rounded-md px-5 py-2.5 text-xs font-semibold transition-colors ${
+            featured
+              ? "bg-[#FAD02C] text-[#1E1E1E] hover:bg-yellow-300"
+              : "bg-[#801B1B] text-white hover:bg-[#601414]"
+          }`}
+        >
+          {pack.isCustom ? "Request a quote" : "Order now"}
+        </Link>
+      </div>
+    </article>
+  );
+}
 
 export default function LandingPage() {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -223,148 +378,30 @@ export default function LandingPage() {
       </section>
 
       {/* --- OUR PRODUCTS SECTION --- */}
-      <section
-        id="products"
-        className="max-w-7xl mx-auto px-6 py-20 text-center"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-12">
-          Choose Your Gifta Products
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Companion Pack */}
-          <div className="bg-white/60 rounded-2xl p-6 border border-yellow-200/50 flex flex-col text-left shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white">
-              <Image
-                src="/products/product1.jpeg"
-                alt="Gifta Breadfruit Bar — Companion Pack"
-                width={803}
-                height={1280}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <h3 className="font-bold text-base tracking-wide text-gray-900">
-             COMPANION PACK
-            </h3>
-            <p className="text-xs  text-gray-600 leading-relaxed mt-1">
-              A delicious, wholesome food snack for any moment.
-            </p>
-            <p className="text-xs text-gray-600 leading-relaxed flex-1">
-              All-Natural Plant Ingredients: No additives. Best enjoyed Fresh
-              Bars.
-            </p>
-            <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
-              <Leaf size={10} className="text-green-700" />
-              <span>All-Natural Plant Ingredients: No additives.</span>
-            </div>
-            <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
-              <span className="font-bold text-lg text-gray-900">₦1,500</span>
-              <Link
-                href="/order?product=1"
-                className="bg-[#801B1B] text-white px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-[#601414] transition-colors"
-              >
-                ORDER NOW
-              </Link>
-            </div>
+      <section id="products" className="max-w-7xl mx-auto px-6 py-20">
+        <div className="text-center space-y-3 mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E]">
+            Packs &amp; Pricing
+          </h2>
+          <p className="text-xs md:text-sm text-gray-600 max-w-xl mx-auto leading-relaxed">
+            Every pack is built from the same 6-bar companion pack. Take one for
+            yourself, or a carton for the room — the more bars you buy, the less
+            each bar costs.
+          </p>
+          <div className="inline-flex items-center gap-1.5 bg-[#FAD02C]/20 border border-[#FAD02C]/40 text-[#801B1B] text-[10px] font-semibold tracking-wide px-3 py-1.5 rounded-full">
+            <Leaf size={12} className="text-green-700" />
+            <span>All-Natural Plant Ingredients: No additives.</span>
           </div>
+        </div>
 
-          {/* Bundle Pack - Family Pack */}
-          <div className="relative bg-[#801B1B] text-white rounded-2xl p-6 flex flex-col text-left shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-            <span className="absolute top-4 right-4 bg-[#FAD02C] text-[#1E1E1E] text-[10px] font-bold tracking-wider px-3 py-2 z-50 rounded-full uppercase">
-              Best Value
-            </span>
-            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white">
-              <Image
-                src="/products/product2.jpeg"
-                alt="Gifta Breadfruit Bar — Family Pack"
-                width={571}
-                height={900}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <h3 className="font-bold text-base tracking-wide">
-              Bundle Pack - More to Enjoy at discount.
-            </h3>
-            <p className="text-xs text-red-100 leading-relaxed mt-1">
-              Get 10 to 50 Companion packs of Gifta Breadfruit Bars at a special
-              bundle price. Perfect for sharing, stocking up and enjoying more
-              of what you love.
-            </p>
-            <ul className="flex flex-wrap gap-2 mt-3">
-              {["10-50 Packs", "Better Value", "Perfect for Sharing"].map(
-                (tag) => (
-                  <li
-                    key={tag}
-                    className="flex items-center text-[11px] font-medium text-white gap-1 bg-white/10 rounded-full px-3 py-1"
-                  >
-                    <span className="text-[#FAD02C]">✓</span>
-                    {tag}
-                  </li>
-                ),
-              )}
-            </ul>
-            <div className="inline-flex items-center gap-1.5 bg-white/10 text-white/80 text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-white/15 mt-3">
-              <Leaf size={10} className="text-green-300" />
-              <span>All-Natural Plant Ingredients: No additives.</span>
-            </div>
-            <div className="flex items-center justify-between pt-4 border-t border-white/15 mt-4">
-              <div className="flex items-baseline gap-2">
-                <span className="text-sm text-white/50 line-through">
-                  ₦15,000
-                </span>
-                <span className="font-bold text-lg text-[#FAD02C]">
-                  ₦13,000
-                </span>
-              </div>
-              <Link
-                href="/order?product=2"
-                className="bg-[#FAD02C] text-[#1E1E1E] px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-yellow-300 transition-colors"
-              >
-                GET THE 10-50 PACKS
-              </Link>
-            </div>
-          </div>
-
-          {/* Events Pack */}
-          <div className="bg-white/60 rounded-2xl p-6 border border-yellow-200/50 flex flex-col text-left shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white">
-              <Image
-                src="/products/product3.jpeg"
-                alt="Gifta Breadfruit Bars on display at a trade exhibition — Events Pack"
-                width={1080}
-                height={771}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h3 className="font-bold text-base tracking-wide text-gray-900">
-              Events Pack
-            </h3>
-            <p className="text-xs text-gray-600 leading-relaxed mt-1">
-              50 Companion Packs (5 Cartons) for indoor and outdoor occasions,
-              special events, church fasting and congregational communions.
-            </p>
-            <p className="text-xs text-gray-600 leading-relaxed flex-1">
-              Stock up in bulk and serve Gifta Breadfruit Bars with pride.
-            </p>
-            <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
-              <Leaf size={10} className="text-green-700" />
-              <span>All-Natural Plant Ingredients: No additives.</span>
-            </div>
-            <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
-              <div className="flex items-baseline gap-2">
-                <span className="text-sm text-gray-400 line-through">
-                  ₦75,000
-                </span>
-                <span className="font-bold text-lg text-gray-900">₦50,000</span>
-              </div>
-              <Link
-                href="/order?product=4"
-                className="bg-[#801B1B] text-white px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-[#601414] transition-colors"
-              >
-                ORDER NOW
-              </Link>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+          {PACKS.map((pack) => (
+            <PackCard
+              key={pack.id}
+              pack={pack}
+              spanClass={pack.id <= 3 ? "lg:col-span-2" : "lg:col-span-3"}
+            />
+          ))}
         </div>
       </section>
 

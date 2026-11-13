@@ -16,74 +16,18 @@ import {
   Store,
   CreditCard,
   ChevronDown,
+  PencilRuler,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { buildWhatsAppLink } from "@/lib/constants";
+import { buildWhatsAppLink, formatNaira } from "@/lib/constants";
+import { PACKS, getPack, savingOn } from "@/lib/packs";
 
 const ACCOUNT_NAME = "Titus Ugochukwu Nwabueze";
 const ACCOUNT_NUMBER = "0046473137";
 const BANK_NAME = "GTBank";
 
 const PAYSTACK_KEY = process.env.NEXT_PUBLIC_PAYSTACK_KEY || "pk_test_c3e5a75185e10e3315e409af374c57d8c2932c5b";
-
-const products = [
-  {
-    id: 1,
-    name: "COMPANION PACK",
-    protein: "6 Short Bars",
-    desc: "Simplest unit containing 6 Gifta short bars. Portable for office tea break, flights, long distant travels & visits, meetings and conferences.",
-    price: "₦1,500",
-    rawPrice: 1500,
-    image: "/products/product1.jpeg",
-  },
-  {
-    id: 2,
-    name: "FAMILY PACK",
-    protein: "10 Companion Packs (60 Bars)",
-    desc: "Good for children school packs, family breakfast and executive meetings.",
-    price: "₦13,000",
-    oldPrice: "₦15,000",
-    rawPrice: 13000,
-    barsPerPack: 60,
-    image: "/products/product2.jpeg",
-  },
-  {
-    id: 3,
-    name: "GEZELLIG PACK",
-    protein: "30 Companion Packs (180 Bars)",
-    desc: "Good for planned small group celebrations, gifts to staff and office guests and colleagues.",
-    price: "₦33,000",
-    oldPrice: "₦45,000",
-    rawPrice: 33000,
-    barsPerPack: 180,
-    image: "/bar10.jpg",
-  },
-  {
-    id: 4,
-    name: "EVENTS PACK",
-    protein: "50 Companion Packs (300 Bars)",
-    desc: "Good for indoor/outdoor occasions, special prestigious events, political party executives, church fasting and congregational communions.",
-    price: "₦50,000",
-    oldPrice: "₦75,000",
-    rawPrice: 50000,
-    barsPerPack: 300,
-    image: "/products/product3.jpeg",
-  },
-  {
-    id: 5,
-    name: "CUSTOMIZED PACK",
-    protein: "Custom Quantity",
-    desc: "Special cartons designed with customer's logo, picture or event at negotiated prices. For political candidates, businesses, transporters, airlines.",
-    price: "Negotiated",
-    rawPrice: 0,
-    isCustom: true,
-    image: "/product1.png",
-  },
-];
-
-const formatNaira = (value) =>
-  "₦" + value.toLocaleString("en-NG");
 
 const locationOptions = [
   { value: "", label: "Select your location" },
@@ -105,8 +49,7 @@ function OrderContent() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
   const quantityParam = searchParams.get("quantity");
-  const initialProduct =
-    products.find((p) => p.id === Number(productParam)) || products[0];
+  const initialProduct = getPack(productParam);
   const initialQuantity = Number(quantityParam) > 0 ? Number(quantityParam) : 1;
 
   const [name, setName] = useState("");
@@ -141,10 +84,12 @@ function OrderContent() {
     effectiveLocation.toLowerCase().includes("umuahia") ||
     effectiveLocation.toLowerCase().includes("abia");
   const deliveryFee = orderType === "delivery" && isUmuahia ? 0 : orderType === "delivery" ? 1000 : 0;
-  const perBarPrice = selectedProduct.barsPerPack
-    ? selectedProduct.rawPrice / selectedProduct.barsPerPack
-    : selectedProduct.rawPrice;
-  const totalPrice = perBarPrice * quantity + deliveryFee;
+  const isCustom = Boolean(selectedProduct.isCustom);
+  // Prices cover the whole pack: one companion pack or one carton.
+  const unitPrice = isCustom ? 0 : selectedProduct.price;
+  const subtotal = unitPrice * quantity;
+  const totalPrice = subtotal + deliveryFee;
+  const totalBars = selectedProduct.bars ? selectedProduct.bars * quantity : null;
 
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
@@ -172,7 +117,7 @@ function OrderContent() {
         ? `\nOrder Type: Delivery\nDelivery Address: ${address || "N/A"}\nLocation: ${effectiveLocation || "N/A"}\nDelivery Fee: ${deliveryFee === 0 ? "Free (Inside Umuahia)" : formatNaira(deliveryFee)}`
         : "\nOrder Type: Pickup";
 
-    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name}\nQuantity: ${quantity}\nUnit Price: ${formatNaira(perBarPrice)}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
+    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name} (${selectedProduct.contents})\nQuantity: ${quantity}\nUnit Price: ${formatNaira(unitPrice)}${totalBars ? `\nTotal Bars: ${totalBars}` : ""}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
 
     if (paymentNote) {
       text += `\n\n${paymentNote}`;
@@ -203,7 +148,7 @@ function OrderContent() {
     }
 
     window.location.href = buildWhatsAppLink(text);
-  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, perBarPrice, totalPrice]);
+  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, unitPrice, totalBars, totalPrice]);
 
   const handlePayAndSend = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -287,34 +232,55 @@ function OrderContent() {
             Select Your Pack
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {(showAllPacks ? products : [selectedProduct]).map((product) => (
+            {(showAllPacks ? PACKS : [selectedProduct]).map((pack) => (
               <button
-                key={product.id}
+                key={pack.id}
                 type="button"
-                onClick={() => setSelectedProduct(product)}
-                className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct.id === product.id ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
+                onClick={() => setSelectedProduct(pack)}
+                className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct.id === pack.id ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
               >
                 <div className="w-full h-24 rounded-xl overflow-hidden bg-white/80 mb-3 flex items-center justify-center">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={400}
-                    height={300}
-                    className="w-full h-full object-contain"
-                  />
+                  {pack.isCustom ? (
+                    <div className="h-full w-full flex flex-col items-center justify-center gap-1 border-2 border-dashed border-[#801B1B]/30">
+                      <PencilRuler size={16} className="text-[#801B1B]" />
+                      <span className="text-[10px] font-semibold text-[#801B1B]">
+                        Your logo here
+                      </span>
+                    </div>
+                  ) : (
+                    <Image
+                      src={pack.image}
+                      alt={pack.name}
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-contain"
+                    />
+                  )}
                 </div>
                 <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
-                  {product.name}
+                  {pack.name}
                 </h3>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  {product.protein}
+                  {pack.contents}
                 </p>
                 <p className="text-xs text-gray-600 leading-relaxed mt-1">
-                  {product.desc}
+                  {pack.summary}
                 </p>
-                <p className="font-bold text-sm text-[#801B1B] mt-2">
-                  {product.price}
-                </p>
+                <div className="flex items-baseline gap-2 mt-2">
+                  {pack.oldPrice && (
+                    <span className="text-xs text-gray-400 line-through">
+                      {formatNaira(pack.oldPrice)}
+                    </span>
+                  )}
+                  <span className="font-bold text-sm text-[#801B1B]">
+                    {pack.isCustom ? "Negotiated" : formatNaira(pack.price)}
+                  </span>
+                  {savingOn(pack) > 0 && (
+                    <span className="text-[10px] font-semibold text-[#801B1B]/70">
+                      Save {formatNaira(savingOn(pack))}
+                    </span>
+                  )}
+                </div>
               </button>
             ))}
           </div>
@@ -330,32 +296,36 @@ function OrderContent() {
         {/* Quantity Selector */}
         <div className="mt-8 bg-white/60 border border-yellow-200/50 rounded-2xl p-6 text-left shadow-sm">
           <label className="text-xs font-semibold text-gray-700">
-            Quantity
+            {isCustom ? "Quantity to be agreed" : "Quantity"}
           </label>
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-3">
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors"
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Decrease quantity"
+                disabled={isCustom}
               >
                 <Minus size={16} />
               </button>
               <span className="w-10 text-center font-bold text-lg">
-                {quantity}
+                {isCustom ? "—" : quantity}
               </span>
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
-                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors"
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:border-[#801B1B] hover:text-[#801B1B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Increase quantity"
+                disabled={isCustom}
               >
                 <Plus size={16} />
               </button>
             </div>
             <p className="text-xs text-gray-500">
-              {quantity} × {formatNaira(perBarPrice)}
+              {isCustom
+                ? "Pricing negotiated per order"
+                : `${quantity} × ${formatNaira(unitPrice)}`}
             </p>
           </div>
         </div>
@@ -441,7 +411,7 @@ function OrderContent() {
             </label>
             <input
               type="text"
-              value={`${selectedProduct.name} — ${selectedProduct.price}`}
+              value={`${selectedProduct.name} — ${selectedProduct.contents}`}
               readOnly
               className="mt-1 w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-500"
             />
@@ -506,18 +476,36 @@ function OrderContent() {
               <span className="font-medium">{selectedProduct.name}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Quantity</span>
-              <span className="font-medium">{quantity}</span>
+              <span className="text-gray-600">Contents</span>
+              <span className="font-medium text-right">{selectedProduct.contents}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Subtotal</span>
-              <span className="font-medium">{formatNaira(perBarPrice * quantity)}</span>
-            </div>
+            {!isCustom && (
+              <>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Quantity</span>
+                  <span className="font-medium">{quantity}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Unit Price</span>
+                  <span className="font-medium">{formatNaira(unitPrice)}</span>
+                </div>
+                {totalBars && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Total Bars</span>
+                    <span className="font-medium">{totalBars}</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span className="font-medium">{formatNaira(subtotal)}</span>
+                </div>
+              </>
+            )}
             <div className="flex justify-between">
               <span className="text-gray-600">Order Type</span>
               <span className="font-medium capitalize">{orderType}</span>
             </div>
-            {orderType === "delivery" && (
+            {orderType === "delivery" && !isCustom && (
               <div className="flex justify-between">
                 <span className="text-gray-600">Delivery Fee</span>
                 <span className="font-medium">
@@ -531,7 +519,13 @@ function OrderContent() {
             )}
             <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between">
               <span className="font-bold text-gray-900">Total</span>
-              <span className="font-bold text-[#801B1B] text-lg">{formatNaira(totalPrice)}</span>
+              {isCustom ? (
+                <span className="font-bold text-[#801B1B] text-lg">Negotiated</span>
+              ) : (
+                <span className="font-bold text-[#801B1B] text-lg">
+                  {formatNaira(totalPrice)}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -748,13 +742,15 @@ function OrderContent() {
           </div>
         )}
 
-        {paymentMethod === "bank" && selectedProduct.isCustom && (
+        {selectedProduct.isCustom && (
           <div className="mt-8 bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
             <p className="text-sm text-amber-800 font-medium">
               For Customized Pack orders, please contact us directly via WhatsApp to discuss your requirements and negotiate pricing.
             </p>
             <a
-              href={buildWhatsAppLink("Hello Gifta Breadfruit Bars, I would like to order a Customized Pack with our logo/branding.")}
+              href={buildWhatsAppLink(
+                `Hello Gifta Breadfruit Bars, I would like to order a Customized Pack with our logo/branding.\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nDetails: `,
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-block bg-[#801B1B] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#601414] transition-colors"
