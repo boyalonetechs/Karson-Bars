@@ -158,24 +158,40 @@ export default function LandingPage() {
             Why Gifta Breadfruit Bars?
           </h2>
           <p className="text-sm md:text-base text-red-100 max-w-2xl mx-auto leading-relaxed">
-            Made with the wholesome goodness of breadfruit, Gifta Breadfruit
+            Made with the wholesome goodness of African breadfruit (Ukwa), Gifta Breadfruit
             Bars are a delicious and satisfying food snack for every moment.
           </p>
           <p className="text-xs md:text-sm text-yellow-300 font-medium tracking-wide uppercase">
             Delicious. Wholesome. Naturally satisfying.
           </p>
 
+          <div className="pt-10">
+            <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white">
+              <Image
+                src="/products/about.jpeg"
+                alt="Gifta Multi Services Limited at the Umuahia Mega Exhibition — Christmas Shopping Festival, Abia Mall Shoprite"
+                width={1080}
+                height={1080}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="text-xs text-red-100 mt-3">
+              Gifta Multi Services Ltd at the Umuahia Mega Exhibition — Christmas
+              Shopping Festival, Abia Mall Shoprite, 5th–7th December 2025.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 text-left">
             {[
               {
                 icon: Sparkles,
-                title: "High in Protein",
-                text: "Rich in plant protein that supports muscle health and keeps you feeling full and energised throughout the day.",
+                title: "High in Protein (28%)",
+                text: "Rich in plant protein from African breadfruit (Ukwa) & soybean that supports muscle health and keeps you feeling full and energised throughout the day.",
               },
               {
                 icon: Heart,
                 title: "Healthy & Nutritious",
-                text: "Packed with dietary fibre, vitamins and minerals to support digestion and overall well-being for the whole family.",
+                text: "Packed with high dietary fibre (25%) from whole plant seeds to support digestion and overall well-being for the whole family.",
               },
               {
                 icon: Leaf,
@@ -207,22 +223,22 @@ export default function LandingPage() {
       {/* --- OUR PRODUCTS SECTION --- */}
       <section
         id="products"
-        className="max-w-5xl mx-auto px-6 py-20 text-center"
+        className="max-w-7xl mx-auto px-6 py-20 text-center"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-12">
-          Choose Your Gifta
+          Choose Your Gifta Products
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {/* Single Pack */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Companion Pack */}
           <div className="bg-white/60 rounded-2xl p-6 border border-yellow-200/50 flex flex-col text-left shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center">
+            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white">
               <Image
-                src="/bar1.png"
-                alt="Gifta Breadfruit Bar — Single Pack"
-                width={400}
-                height={400}
-                className="w-full h-full object-cover"
+                src="/products/product1.jpeg"
+                alt="Gifta Breadfruit Bar — Companion Pack"
+                width={803}
+                height={1280}
+                className="w-full h-full object-contain"
               />
             </div>
             <h3 className="font-bold text-base tracking-wide text-gray-900">
@@ -232,7 +248,7 @@ export default function LandingPage() {
               A delicious, wholesome food snack for any moment.
             </p>
             <p className="text-xs text-gray-600 leading-relaxed flex-1">
-              Perfect for everyday enjoyment and life on the go.
+              All-Natural Plant Ingredients: No additives. Best enjoyed Fresh Bars.
             </p>
             <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
               <Leaf size={10} className="text-green-700" />
@@ -249,29 +265,28 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* 10-Pack Bundle */}
+          {/* Bundle Pack - Family Pack */}
           <div className="relative bg-[#801B1B] text-white rounded-2xl p-6 flex flex-col text-left shadow-md hover:shadow-lg transition-shadow overflow-hidden">
             <span className="absolute top-4 right-4 bg-[#FAD02C] text-[#1E1E1E] text-[10px] font-bold tracking-wider px-3 py-2 z-50 rounded-full uppercase">
               Best Value
             </span>
-            <div className="w-full h-50 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white/10">
+            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white">
               <Image
-                src="/gifterbars.jpg"
-                alt="Gifta Breadfruit Bar — 10-Pack Bundle"
-                width={400}
-                height={400}
-                className="w-full h-full object-cover opacity-90"
+                src="/products/product2.jpeg"
+                alt="Gifta Breadfruit Bar — Family Pack"
+                width={571}
+                height={900}
+                className="w-full h-full object-contain"
               />
             </div>
             <h3 className="font-bold text-base tracking-wide">
               Bundle Pack - More to Enjoy at discount.
             </h3>
             <p className="text-xs text-red-100 leading-relaxed mt-1">
-              Get 10 Gifta Breadfruit Bars at a special bundle price, perfect
-              for sharing, stocking up and enjoying more of what you love.
+              Get 10 to 50 Companion packs of Gifta Breadfruit Bars at a special bundle price. Perfect for sharing, stocking up and enjoying more of what you love.
             </p>
             <ul className="flex flex-wrap gap-2 mt-3">
-              {["10 Bars", "Better Value", "Perfect for Sharing"].map((tag) => (
+              {["10-50 Packs", "Better Value", "Perfect for Sharing"].map((tag) => (
                 <li
                   key={tag}
                   className="flex items-center text-[11px] font-medium text-white gap-1 bg-white/10 rounded-full px-3 py-1"
@@ -295,13 +310,65 @@ export default function LandingPage() {
                 </span>
               </div>
               <Link
-                href="/order?product=10&quantity=10"
+                href="/order?product=2"
                 className="bg-[#FAD02C] text-[#1E1E1E] px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-yellow-300 transition-colors"
               >
-                GET THE 10-PACK
+                GET THE 10-50 PACKS
               </Link>
             </div>
           </div>
+
+          {/* Events Pack */}
+          <div className="bg-white/60 rounded-2xl p-6 border border-yellow-200/50 flex flex-col text-left shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-full h-48 rounded-xl mb-5 overflow-hidden flex items-center justify-center bg-white">
+              <Image
+                src="/products/product3.jpeg"
+                alt="Gifta Breadfruit Bars on display at a trade exhibition — Events Pack"
+                width={1080}
+                height={771}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="font-bold text-base tracking-wide text-gray-900">
+              Events Pack
+            </h3>
+            <p className="text-xs text-gray-600 leading-relaxed mt-1">
+              50 Companion Packs (300 Bars) for indoor and outdoor occasions,
+              special events, church fasting and congregational communions.
+            </p>
+            <p className="text-xs text-gray-600 leading-relaxed flex-1">
+              Stock up in bulk and serve Gifta Breadfruit Bars with pride.
+            </p>
+            <div className="inline-flex items-center gap-1.5 bg-[#801B1B]/8 text-[#801B1B] text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border border-[#801B1B]/10 mt-2">
+              <Leaf size={10} className="text-green-700" />
+              <span>No preservatives added. Best enjoyed fresh.</span>
+            </div>
+            <div className="flex items-center justify-between pt-4 border-t border-yellow-200/50 mt-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-sm text-gray-400 line-through">
+                  ₦75,000
+                </span>
+                <span className="font-bold text-lg text-gray-900">₦50,000</span>
+              </div>
+              <Link
+                href="/order?product=4"
+                className="bg-[#801B1B] text-white px-5 py-2.5 rounded-md text-xs font-semibold hover:bg-[#601414] transition-colors"
+              >
+                ORDER NOW
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* View All Packs Section */}
+        <div className="mt-12 text-center">
+          <Link
+            href="/order"
+            className="inline-flex items-center gap-2 bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-[#601414] transition-colors"
+          >
+            <span>VIEW ALL PACKS</span>
+          </Link>
+          <p className="text-xs text-gray-500 mt-3">SAME PACK DIFFERENT CATEGORIES</p>
         </div>
       </section>
 

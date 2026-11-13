@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Award,
   BadgeCheck,
@@ -35,6 +36,21 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* About Image */}
+            <figure className="rounded-2xl overflow-hidden shadow-md border border-yellow-200/50 bg-white">
+              <Image
+                src="/products/about.jpeg"
+                alt="Prof. Titus Ugochukwu Nwabueze at the Umuahia Mega Exhibition — Christmas Shopping Festival, Abia Mall Shoprite"
+                width={1080}
+                height={1080}
+                className="w-full h-full object-cover"
+              />
+              <figcaption className="px-5 py-3 text-xs text-gray-500 bg-white">
+                Gifta Multi Services Ltd at the Umuahia Mega Exhibition — Christmas
+                Shopping Festival, Abia Mall Shoprite, 5th–7th December 2025.
+              </figcaption>
+            </figure>
+
             {/* Company Story */}
             <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
               <p>
@@ -56,44 +72,44 @@ export default function AboutPage() {
                 traditional roasting or boiling and consuming as porridge meals.
               </p>
             </div>
+          </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                {
-                  icon: Award,
-                  title: "CAC Registered",
-                  sub: "Business company since 2011",
-                },
-                {
-                  icon: BadgeCheck,
-                  title: "NAFDAC Registered",
-                  sub: "Gifta Breadfruit Bars certified",
-                },
-                {
-                  icon: Leaf,
-                  title: "100% Plant-Based",
-                  sub: "Made from African breadfruit seeds",
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white/60 border border-yellow-200/50 rounded-2xl p-5 flex items-start space-x-4 shadow-sm"
-                >
-                  <div className="bg-[#FAD02C] p-2.5 rounded-full text-[#1E1E1E] shrink-0">
-                    <item.icon size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-sm md:text-base mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-gray-500 leading-relaxed">
-                      {item.sub}
-                    </p>
-                  </div>
+          {/* Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+            {[
+              {
+                icon: Award,
+                title: "CAC Registered",
+                sub: "Business company since 2011",
+              },
+              {
+                icon: BadgeCheck,
+                title: "NAFDAC Registered",
+                sub: "Gifta Breadfruit Bars certified",
+              },
+              {
+                icon: Leaf,
+                title: "100% Plant-Based",
+                sub: "Made from African breadfruit seeds",
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-white/60 border border-yellow-200/50 rounded-2xl p-5 flex items-start space-x-4 shadow-sm"
+              >
+                <div className="bg-[#FAD02C] p-2.5 rounded-full text-[#1E1E1E] shrink-0">
+                  <item.icon size={18} />
                 </div>
-              ))}
-            </div>
+                <div>
+                  <h3 className="font-bold text-sm md:text-base mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    {item.sub}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -188,15 +204,15 @@ export default function AboutPage() {
               The Challenge at Retirement
             </h2>
             <p>
-              My retirement from Michael Okpara University of Agriculture
+              His retirement from Michael Okpara University of Agriculture
               Umudike on 9th January 2025, after 20 years of professorship,
               opened a divinely awaited opportunity to translate the wealth of
-              my intense research on African breadfruit utilization beyond
+              his intense research on African breadfruit utilization beyond
               roasting as snacks with palm kernels and boiling into porridge
               meals.
             </p>
             <p>
-              African breadfruit was my pivot in my inaugural lecture in 2018,
+              African breadfruit was the pivot in his inaugural lecture in 2018,
               titled{" "}
               <em className="text-[#801B1B] font-semibold">
                 BREAD ON THE TREE
@@ -229,7 +245,7 @@ export default function AboutPage() {
       <section className="bg-[#801B1B] text-white py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-center text-2xl md:text-3xl font-bold mb-2">
-            Exhibitions, Trade Fairs &amp; Conferences
+            Exhibitions, Trade Fairs & Conferences
           </h2>
           <p className="text-center text-xs md:text-sm text-red-100 mb-12">
             Sharing Gifta Breadfruit Bars across Nigeria and beyond

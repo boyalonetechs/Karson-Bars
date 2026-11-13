@@ -30,50 +30,55 @@ const PAYSTACK_KEY = process.env.NEXT_PUBLIC_PAYSTACK_KEY || "pk_test_c3e5a75185
 const products = [
   {
     id: 1,
-    name: "Gifta Breadfruit Groundnut",
-    protein: "Groundnut",
-    desc: "A wholesome pack of breadfruit bars with complementary groundnut protein.",
+    name: "COMPANION PACK",
+    protein: "6 Short Bars",
+    desc: "Simplest unit containing 6 Gifta short bars. Portable for office tea break, flights, long distant travels & visits, meetings and conferences.",
     price: "₦1,500",
     rawPrice: 1500,
-    image: "/bar1.png",
+    image: "/products/product1.jpeg",
   },
   {
     id: 2,
-    name: "Gifta Breadfruit Chicken",
-    protein: "Chicken",
-    desc: "Nutritious breadfruit bars paired with complementary chicken protein.",
-    price: "₦1,500",
-    rawPrice: 1500,
-    image: "/bar2.png",
-  },
-  {
-    id: 3,
-    name: "Gifta Breadfruit Meat",
-    protein: "Meat",
-    desc: "Hearty breadfruit bars with complementary meat protein for extra energy.",
-    price: "₦1,500",
-    rawPrice: 1500,
-    image: "/bar3.png",
-  },
-  {
-    id: 4,
-    name: "Gifta Breadfruit Pack Carton",
-    protein: "Assorted",
-    desc: "A generous bulk carton of breadfruit bars — ideal for events, families and distributors.",
-    price: "₦1,500",
-    rawPrice: 1500,
-    image: "/bar4.png",
-  },
-  {
-    id: 10,
-    name: "Gifta Breadfruit 10-Pack Bundle",
-    protein: "Bundle",
-    desc: "10 Gifta Breadfruit Bars at a special bundle price — perfect for sharing, stocking up and enjoying more of what you love.",
+    name: "FAMILY PACK",
+    protein: "10 Companion Packs (60 Bars)",
+    desc: "Good for children school packs, family breakfast and executive meetings.",
     price: "₦13,000",
     oldPrice: "₦15,000",
     rawPrice: 13000,
-    barsPerPack: 10,
-    image: "/bar1.png",
+    barsPerPack: 60,
+    image: "/products/product2.jpeg",
+  },
+  {
+    id: 3,
+    name: "GEZELLIG PACK",
+    protein: "30 Companion Packs (180 Bars)",
+    desc: "Good for planned small group celebrations, gifts to staff and office guests and colleagues.",
+    price: "₦33,000",
+    oldPrice: "₦45,000",
+    rawPrice: 33000,
+    barsPerPack: 180,
+    image: "/bar10.jpg",
+  },
+  {
+    id: 4,
+    name: "EVENTS PACK",
+    protein: "50 Companion Packs (300 Bars)",
+    desc: "Good for indoor/outdoor occasions, special prestigious events, political party executives, church fasting and congregational communions.",
+    price: "₦50,000",
+    oldPrice: "₦75,000",
+    rawPrice: 50000,
+    barsPerPack: 300,
+    image: "/products/product3.jpeg",
+  },
+  {
+    id: 5,
+    name: "CUSTOMIZED PACK",
+    protein: "Custom Quantity",
+    desc: "Special cartons designed with customer's logo, picture or event at negotiated prices. For political candidates, businesses, transporters, airlines.",
+    price: "Negotiated",
+    rawPrice: 0,
+    isCustom: true,
+    image: "/product1.png",
   },
 ];
 
@@ -167,7 +172,7 @@ function OrderContent() {
         ? `\nOrder Type: Delivery\nDelivery Address: ${address || "N/A"}\nLocation: ${effectiveLocation || "N/A"}\nDelivery Fee: ${deliveryFee === 0 ? "Free (Inside Umuahia)" : formatNaira(deliveryFee)}`
         : "\nOrder Type: Pickup";
 
-    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name} (${selectedProduct.protein})\nQuantity: ${quantity}\nUnit Price: ${formatNaira(perBarPrice)}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
+    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name}\nQuantity: ${quantity}\nUnit Price: ${formatNaira(perBarPrice)}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
 
     if (paymentNote) {
       text += `\n\n${paymentNote}`;
@@ -221,6 +226,10 @@ function OrderContent() {
     }
     if (orderType === "delivery" && location === "Other" && !customLocation.trim()) {
       setFormError("Please specify your location.");
+      return;
+    }
+    if (selectedProduct.isCustom) {
+      setFormError("For Customized Pack, please contact us directly for pricing.");
       return;
     }
     setFormError("");
@@ -285,11 +294,20 @@ function OrderContent() {
                 onClick={() => setSelectedProduct(product)}
                 className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all ${selectedProduct.id === product.id ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
               >
+                <div className="w-full h-24 rounded-xl overflow-hidden bg-white/80 mb-3 flex items-center justify-center">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
                 <h3 className="font-bold text-xs tracking-wider text-gray-900 uppercase">
                   {product.name}
                 </h3>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Protein: {product.protein}
+                  {product.protein}
                 </p>
                 <p className="text-xs text-gray-600 leading-relaxed mt-1">
                   {product.desc}
@@ -381,7 +399,7 @@ function OrderContent() {
           </div>
           {orderType === "delivery" && isUmuahia && (
             <p className="mt-3 text-xs text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2 font-medium">
-              Delivery inside Umuahia is FREE!
+              Free Delivery Within Umuahia
             </p>
           )}
           {orderType === "delivery" && !isUmuahia && effectiveLocation && (
@@ -423,7 +441,7 @@ function OrderContent() {
             </label>
             <input
               type="text"
-              value={`${selectedProduct.name} (${selectedProduct.protein}) — ${selectedProduct.price}`}
+              value={`${selectedProduct.name} — ${selectedProduct.price}`}
               readOnly
               className="mt-1 w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-500"
             />
@@ -504,7 +522,7 @@ function OrderContent() {
                 <span className="text-gray-600">Delivery Fee</span>
                 <span className="font-medium">
                   {deliveryFee === 0 ? (
-                    <span className="text-green-700">Free (Umuahia)</span>
+                    <span className="text-green-700">Free Delivery Within Umuahia</span>
                   ) : (
                     formatNaira(deliveryFee)
                   )}
@@ -527,7 +545,8 @@ function OrderContent() {
             <button
               type="button"
               onClick={() => setPaymentMethod("paystack")}
-              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all flex items-center space-x-3 ${paymentMethod === "paystack" ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
+              disabled={selectedProduct.isCustom}
+              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all flex items-center space-x-3 ${paymentMethod === "paystack" ? "bg-[#FAD02C] border-[#801B1B]" : selectedProduct.isCustom ? "opacity-50 cursor-not-allowed" : "bg-white/60 border-yellow-200/50"}`}
             >
               <div className={`p-2.5 rounded-full ${paymentMethod === "paystack" ? "bg-[#801B1B] text-white" : "bg-gray-100 text-gray-600"}`}>
                 <CreditCard size={18} />
@@ -542,7 +561,8 @@ function OrderContent() {
             <button
               type="button"
               onClick={() => setPaymentMethod("bank")}
-              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all flex items-center space-x-3 ${paymentMethod === "bank" ? "bg-[#FAD02C] border-[#801B1B]" : "bg-white/60 border-yellow-200/50"}`}
+              disabled={selectedProduct.isCustom}
+              className={`rounded-2xl p-5 text-left border shadow-sm hover:shadow-md transition-all flex items-center space-x-3 ${paymentMethod === "bank" ? "bg-[#FAD02C] border-[#801B1B]" : selectedProduct.isCustom ? "opacity-50 cursor-not-allowed" : "bg-white/60 border-yellow-200/50"}`}
             >
               <div className={`p-2.5 rounded-full ${paymentMethod === "bank" ? "bg-[#801B1B] text-white" : "bg-gray-100 text-gray-600"}`}>
                 <Landmark size={18} />
@@ -555,10 +575,15 @@ function OrderContent() {
               </div>
             </button>
           </div>
+          {selectedProduct.isCustom && (
+            <p className="mt-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 font-medium">
+              Customized Pack pricing is negotiated. Please contact us directly.
+            </p>
+          )}
         </div>
 
         {/* Paystack Payment */}
-        {paymentMethod === "paystack" && (
+        {paymentMethod === "paystack" && !selectedProduct.isCustom && (
           <div className="mt-8">
             {formError && (
               <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2 mb-3 font-medium">
@@ -585,7 +610,7 @@ function OrderContent() {
         )}
 
         {/* Bank Transfer Payment */}
-        {paymentMethod === "bank" && (
+        {paymentMethod === "bank" && !selectedProduct.isCustom && (
           <div className="mt-10 bg-[#801B1B] text-white rounded-3xl p-8 text-left shadow-lg">
             <div className="flex items-center space-x-3 mb-6">
               <div className="bg-[#FAD02C] p-3 rounded-full text-[#1E1E1E]">
@@ -723,7 +748,23 @@ function OrderContent() {
           </div>
         )}
 
-        {!paymentMethod && (
+        {paymentMethod === "bank" && selectedProduct.isCustom && (
+          <div className="mt-8 bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
+            <p className="text-sm text-amber-800 font-medium">
+              For Customized Pack orders, please contact us directly via WhatsApp to discuss your requirements and negotiate pricing.
+            </p>
+            <a
+              href={buildWhatsAppLink("Hello Gifta Breadfruit Bars, I would like to order a Customized Pack with our logo/branding.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block bg-[#801B1B] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#601414] transition-colors"
+            >
+              Contact Us for Custom Order
+            </a>
+          </div>
+        )}
+
+        {!paymentMethod && !selectedProduct.isCustom && (
           <p className="mt-6 text-xs text-gray-400 italic">
             Please select a payment method above to continue.
           </p>
