@@ -359,17 +359,6 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-
-        {/* View All Packs Section */}
-        <div className="mt-12 text-center">
-          <Link
-            href="/order"
-            className="inline-flex items-center gap-2 bg-[#801B1B] text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-[#601414] transition-colors"
-          >
-            <span>VIEW ALL PACKS</span>
-          </Link>
-          <p className="text-xs text-gray-500 mt-3">SAME PACK DIFFERENT CATEGORIES</p>
-        </div>
       </section>
 
       {/* --- CUSTOMER REVIEWS SECTION --- */}
