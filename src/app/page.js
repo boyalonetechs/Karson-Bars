@@ -244,7 +244,7 @@ export default function LandingPage() {
               />
             </div>
             <h3 className="font-bold text-base tracking-wide text-gray-900">
-              Gifta Breadfruit Bar
+             COMPANION PACK
             </h3>
             <p className="text-xs  text-gray-600 leading-relaxed mt-1">
               A delicious, wholesome food snack for any moment.
@@ -340,7 +340,7 @@ export default function LandingPage() {
               Events Pack
             </h3>
             <p className="text-xs text-gray-600 leading-relaxed mt-1">
-              50 Companion Packs (300 Bars) for indoor and outdoor occasions,
+              50 Companion Packs (5 Cartons) for indoor and outdoor occasions,
               special events, church fasting and congregational communions.
             </p>
             <p className="text-xs text-gray-600 leading-relaxed flex-1">

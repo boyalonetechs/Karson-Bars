@@ -3,3 +3,6 @@ export const WHATSAPP_NUMBER = "2348035422843";
 
 export const buildWhatsAppLink = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+export const formatNaira = (value) =>
+  `₦${Number(value ?? 0).toLocaleString("en-NG")}`;
