@@ -243,7 +243,10 @@ export default function LandingPage() {
             </p>
             <div className="inline-flex items-center gap-2 bg-[#FAD02C]/20 border border-[#FAD02C]/40 text-[#801B1B] text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
               <Leaf size={13} className="text-green-700" />
-              <span>All-Natural Plant Ingredients: No additives.</span>
+              <span>
+                All-Natural Plant Ingredients: No additives. Best enjoyed Fresh
+                Bars{" "}
+              </span>
             </div>
             <p className="text-gray-600 text-sm md:text-base max-w-md">
               A delicious and wholesome food snack for kids, adults and the
@@ -390,7 +393,10 @@ export default function LandingPage() {
           </p>
           <div className="inline-flex items-center gap-1.5 bg-[#FAD02C]/20 border border-[#FAD02C]/40 text-[#801B1B] text-[10px] font-semibold tracking-wide px-3 py-1.5 rounded-full">
             <Leaf size={12} className="text-green-700" />
-            <span>All-Natural Plant Ingredients: No additives.</span>
+            <span>
+              All-Natural Plant Ingredients: No additives. Best enjoyed Fresh
+              Bars{" "}
+            </span>
           </div>
         </div>
 
