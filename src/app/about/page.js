@@ -46,8 +46,9 @@ export default function AboutPage() {
                 className="w-full h-full object-cover"
               />
               <figcaption className="px-5 py-3 text-xs text-gray-500 bg-white">
-                Gifta Multi Services Ltd at the Umuahia Mega Exhibition — Christmas
-                Shopping Festival, Abia Mall Shoprite, 5th–7th December 2025.
+                Gifta Multi Services Ltd at the Umuahia Mega Exhibition —
+                Christmas Shopping Festival, Abia Mall Shoprite, 5th–7th
+                December 2025.
               </figcaption>
             </figure>
 
@@ -85,7 +86,7 @@ export default function AboutPage() {
               {
                 icon: BadgeCheck,
                 title: "NAFDAC Registered",
-                sub: "Gifta Breadfruit Bars certified",
+                sub: "Gifta Breadfruit Bars certified. NAFDAC No. A8-124913L",
               },
               {
                 icon: Leaf,

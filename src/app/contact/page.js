@@ -105,23 +105,6 @@ export default function ContactPage() {
           <div className="space-y-4">
             {[
               {
-                icon: MessageCircle,
-                title: "WhatsApp",
-                text: "Chat with us directly — tap the button below.",
-                action: (
-                  <a
-                    href={buildWhatsAppLink(
-                      "Hello Gifta Breadfruit Bars, I would like to make an enquiry.",
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-2 text-xs font-semibold text-[#801B1B] hover:underline"
-                  >
-                    Open WhatsApp Chat →
-                  </a>
-                ),
-              },
-              {
                 icon: Phone,
                 title: "Phone",
                 text: "Call or send an SMS to +234 803 542 2843 during working hours.",
