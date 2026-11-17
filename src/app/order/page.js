@@ -29,6 +29,8 @@ const BANK_NAME = "GTBank";
 
 const PAYSTACK_KEY = process.env.NEXT_PUBLIC_PAYSTACK_KEY || "pk_test_c3e5a75185e10e3315e409af374c57d8c2932c5b";
 
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
 const locationOptions = [
   { value: "", label: "Select your location" },
   { value: "Umuahia, Abia State", label: "Umuahia, Abia State", freeDelivery: true },
@@ -54,6 +56,7 @@ function OrderContent() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(initialProduct);
   const [showAllPacks, setShowAllPacks] = useState(false);
   const [quantity, setQuantity] = useState(initialQuantity);
@@ -115,9 +118,9 @@ function OrderContent() {
     const deliveryText =
       orderType === "delivery"
         ? `\nOrder Type: Delivery\nDelivery Address: ${address || "N/A"}\nLocation: ${effectiveLocation || "N/A"}\nDelivery Fee: ${deliveryFee === 0 ? "Free (Inside Umuahia)" : formatNaira(deliveryFee)}`
-        : "\nOrder Type: Pickup";
+        : `\nOrder Type: Pickup\nPickup Location: To be sent on WhatsApp or email after confirmation`;
 
-    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nProduct: ${selectedProduct.name} (${selectedProduct.contents})\nQuantity: ${quantity}\nUnit Price: ${formatNaira(unitPrice)}${totalBars ? `\nTotal Bars: ${totalBars}` : ""}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
+    let text = `Gifta Breadfruit Bars Order\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}${orderType === "pickup" ? `\nEmail: ${email || "N/A"}` : ""}\nProduct: ${selectedProduct.name} (${selectedProduct.contents})\nQuantity: ${quantity}\nUnit Price: ${formatNaira(unitPrice)}${totalBars ? `\nTotal Bars: ${totalBars}` : ""}\n${deliveryText}\nTotal Amount: ${formatNaira(totalPrice)}\n\nPayment: Bank Transfer\nAccount Name: ${ACCOUNT_NAME}\nBank: ${BANK_NAME}\nAccount Number: ${ACCOUNT_NUMBER}\n\nI have completed payment. Please confirm my order.`;
 
     if (paymentNote) {
       text += `\n\n${paymentNote}`;
@@ -148,7 +151,7 @@ function OrderContent() {
     }
 
     window.location.href = buildWhatsAppLink(text);
-  }, [uploading, file, name, phone, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, unitPrice, totalBars, totalPrice]);
+  }, [uploading, file, name, phone, email, selectedProduct, quantity, orderType, address, effectiveLocation, deliveryFee, unitPrice, totalBars, totalPrice]);
 
   const handlePayAndSend = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -159,6 +162,10 @@ function OrderContent() {
     }
     if (!phone.trim()) {
       setFormError("Please enter your phone number.");
+      return;
+    }
+    if (orderType === "pickup" && email.trim() && !isValidEmail(email)) {
+      setFormError("Please enter a valid email address, or leave it blank.");
       return;
     }
     if (orderType === "delivery" && !address.trim()) {
@@ -186,7 +193,10 @@ function OrderContent() {
 
     const handler = window.PaystackPop.setup({
       key: PAYSTACK_KEY,
-      email: `${name || "customer"}@giftabars.com`,
+      email:
+        orderType === "pickup" && email.trim()
+          ? email.trim()
+          : `${name || "customer"}@giftabars.com`,
       amount: totalPrice * 100,
       currency: "NGN",
       ref: `GIFT-${Date.now()}`,
@@ -197,6 +207,15 @@ function OrderContent() {
             variable_name: "phone",
             value: phone,
           },
+          ...(orderType === "pickup" && email.trim()
+            ? [
+                {
+                  display_name: "Email Address",
+                  variable_name: "email",
+                  value: email.trim(),
+                },
+              ]
+            : []),
           {
             display_name: "Product",
             variable_name: "product",
@@ -211,7 +230,7 @@ function OrderContent() {
       onClose: function () {},
     });
     handler.openIframe();
-    }, [name, phone, selectedProduct, totalPrice, handleSend, orderType, address, location, customLocation]);
+    }, [name, phone, email, selectedProduct, totalPrice, handleSend, orderType, address, location, customLocation]);
 
   return (
     <div className="min-h-screen bg-[#FFFDF0] text-[#1E1E1E] font-sans overflow-x-clip">
@@ -367,6 +386,12 @@ function OrderContent() {
               </div>
             </button>
           </div>
+          {orderType === "pickup" && (
+            <p className="mt-3 text-xs text-[#801B1B] bg-[#FAD02C]/20 border border-[#FAD02C]/60 rounded-lg px-4 py-2.5 font-medium leading-relaxed">
+              We&apos;ll send your pickup location to you on WhatsApp or by email
+              once your order is confirmed.
+            </p>
+          )}
           {orderType === "delivery" && isUmuahia && (
             <p className="mt-3 text-xs text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2 font-medium">
               Free Delivery Within Umuahia
@@ -405,6 +430,23 @@ function OrderContent() {
               className="mt-1 w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
             />
           </div>
+          {orderType === "pickup" && (
+            <div>
+              <label className="text-xs font-semibold text-gray-700">
+                Email Address <span className="font-normal text-gray-500">(optional)</span>
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="mt-1 w-full bg-white/60 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#801B1B]/40"
+              />
+              <p className="mt-1 text-[11px] text-gray-500">
+                We&apos;ll send the pickup location here if you prefer email.
+              </p>
+            </div>
+          )}
           <div>
             <label className="text-xs font-semibold text-gray-700">
               Selected Pack
@@ -715,6 +757,7 @@ function OrderContent() {
               onClick={() => {
                 if (!name.trim()) { setFormError("Please enter your name."); return; }
                 if (!phone.trim()) { setFormError("Please enter your phone number."); return; }
+                if (orderType === "pickup" && email.trim() && !isValidEmail(email)) { setFormError("Please enter a valid email address, or leave it blank."); return; }
                 if (orderType === "delivery" && !address.trim()) { setFormError("Please enter your delivery address."); return; }
                 if (orderType === "delivery" && !location) { setFormError("Please select your location."); return; }
                 if (orderType === "delivery" && location === "Other" && !customLocation.trim()) { setFormError("Please specify your location."); return; }
@@ -749,7 +792,7 @@ function OrderContent() {
             </p>
             <a
               href={buildWhatsAppLink(
-                `Hello Gifta Breadfruit Bars, I would like to order a Customized Pack with our logo/branding.\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}\nDetails: `,
+                `Hello Gifta Breadfruit Bars, I would like to order a Customized Pack with our logo/branding.\n\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}${orderType === "pickup" ? `\nEmail: ${email || "N/A"}` : ""}\nDetails: `,
               )}
               target="_blank"
               rel="noopener noreferrer"
