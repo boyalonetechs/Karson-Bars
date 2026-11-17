@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,6 +13,8 @@ import {
   Gift,
   PartyPopper,
   PencilRuler,
+  Play,
+  X,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -26,6 +28,47 @@ const PACK_ICONS = {
   PartyPopper,
   PencilRuler,
 };
+
+// Gallery assets live in /public/gallery. The video leads as the large tile,
+// with the portrait photo alongside it and two smaller photos filling the row.
+const GALLERY_ITEMS = [
+  {
+    type: "video",
+    src: "/gallery/gifta_video.mp4",
+    poster: "/gallery/video-poster.jpg",
+    alt: "Rose Nwamaka shares her Gifta experience",
+    caption: "Customer story · Rose Nwamaka",
+    span: "col-span-2 row-span-2",
+    lead: true,
+  },
+  {
+    type: "image",
+    src: "/gallery/gallery1.jpeg",
+    alt: "A guest holding a Gifta Breadfruit Bar pack at the exhibition stand",
+    caption: "Gifta up close",
+    width: 486,
+    height: 1080,
+    span: "col-span-1 row-span-2",
+  },
+  {
+    type: "image",
+    src: "/gallery/gallery2.jpeg",
+    alt: "Gifta team and guests at the Umuahia Mega Exhibition",
+    caption: "At the Umuahia Mega Exhibition",
+    width: 1020,
+    height: 765,
+    span: "col-span-1 row-span-1",
+  },
+  {
+    type: "image",
+    src: "/gallery/gallery3.jpeg",
+    alt: "A customer holding a Gifta pack in front of the branded stand",
+    caption: "With our customers",
+    width: 765,
+    height: 1020,
+    span: "col-span-1 row-span-1",
+  },
+];
 
 function PackCard({ pack, spanClass = "" }) {
   const featured = Boolean(pack.featured);
@@ -168,6 +211,8 @@ export default function LandingPage() {
   const [distributorPhone, setDistributorPhone] = useState("");
   const [distributorLocation, setDistributorLocation] = useState("");
   const [distributorMessage, setDistributorMessage] = useState("");
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const lightboxCloseRef = useRef(null);
 
   // Hero Slider Images
   const heroImages = ["/hero1.png", "/hero5.png"];
@@ -186,6 +231,28 @@ export default function LandingPage() {
     const timer = setInterval(() => nextSlide(), 5000);
     return () => clearInterval(timer);
   }, [nextSlide]);
+
+  // Gallery lightbox: keyboard navigation, focus and scroll lock while open.
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    lightboxCloseRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setLightboxIndex(null);
+      if (event.key === "ArrowRight")
+        setLightboxIndex((i) => (i + 1) % GALLERY_ITEMS.length);
+      if (event.key === "ArrowLeft")
+        setLightboxIndex((i) => (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length);
+    };
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [lightboxIndex]);
 
   // Sample Reviews Data
   const reviews = [
@@ -479,6 +546,57 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* --- GALLERY SECTION --- */}
+      <section id="gallery" className="max-w-7xl mx-auto px-6 py-20">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1E1E1E]">
+            Gifta Gallery
+          </h2>
+          <p className="text-xs md:text-sm text-gray-600 mt-2 max-w-xl mx-auto leading-relaxed">
+            A look at Gifta Breadfruit Bars at our exhibitions and with the
+            people who enjoy them.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[170px] sm:auto-rows-[220px] md:auto-rows-[240px] gap-3 md:gap-4">
+          {GALLERY_ITEMS.map((item, index) => (
+            <button
+              key={item.src}
+              type="button"
+              onClick={() => setLightboxIndex(index)}
+              aria-label={`View: ${item.alt}`}
+              className={`group relative overflow-hidden rounded-xl bg-[#801B1B] text-left ${item.span}`}
+            >
+              {item.type === "image" ? (
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width={item.width}
+                  height={item.height}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                <>
+                  <Image
+                    src={item.poster}
+                    alt=""
+                    width={368}
+                    height={480}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#801B1B] shadow-lg transition-transform group-hover:scale-110">
+                    <Play size={28} fill="currentColor" className="ml-1" />
+                  </span>
+                </>
+              )}
+              <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-8 text-[11px] font-medium text-white">
+                {item.caption}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       {/* --- BE A DISTRIBUTOR SECTION --- */}
       <section
         id="contact"
@@ -536,6 +654,87 @@ export default function LandingPage() {
           </button>
         </form>
       </section>
+
+      {/* --- GALLERY LIGHTBOX --- */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Gifta gallery"
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            ref={lightboxCloseRef}
+            type="button"
+            onClick={() => setLightboxIndex(null)}
+            aria-label="Close gallery"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors"
+          >
+            <X size={20} />
+          </button>
+
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setLightboxIndex(
+                (i) => (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length,
+              );
+            }}
+            aria-label="Previous gallery item"
+            className="absolute left-2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors sm:left-6"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <div
+            className="flex max-h-full flex-col items-center"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {GALLERY_ITEMS[lightboxIndex].type === "image" ? (
+              <Image
+                src={GALLERY_ITEMS[lightboxIndex].src}
+                alt={GALLERY_ITEMS[lightboxIndex].alt}
+                width={GALLERY_ITEMS[lightboxIndex].width}
+                height={GALLERY_ITEMS[lightboxIndex].height}
+                className="max-h-[78vh] w-auto max-w-full rounded-xl object-contain"
+              />
+            ) : (
+              <video
+                controls
+                autoPlay
+                playsInline
+                className="max-h-[78vh] w-auto max-w-full rounded-xl"
+              >
+                <source
+                  src={GALLERY_ITEMS[lightboxIndex].src}
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            )}
+            <p className="mt-3 text-xs text-white/80">
+              {GALLERY_ITEMS[lightboxIndex].caption}
+              <span className="ml-2 text-white/40">
+                {lightboxIndex + 1} / {GALLERY_ITEMS.length}
+              </span>
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setLightboxIndex((i) => (i + 1) % GALLERY_ITEMS.length);
+            }}
+            aria-label="Next gallery item"
+            className="absolute right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors sm:right-6"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      )}
 
       <Footer />
     </div>
