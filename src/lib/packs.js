@@ -1,7 +1,3 @@
-// Canonical pack catalogue for Gifta Breadfruit Bars.
-// Every price is the price of the whole pack: one companion pack (6 bars) or one carton.
-// A companion pack is the base unit — cartons are multiples of it.
-
 export const PACKS = [
   {
     id: 1,
